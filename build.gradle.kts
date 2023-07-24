@@ -18,10 +18,11 @@ repositories {
 
 modSettings {
     modId(base.archivesName.get())
-    modName("Team Voided Template Mod")
+    modName("Voided Utils")
 
-    entrypoint("main", "org.teamvoided.templatemod.TemplateMod::commonInit")
-    entrypoint("client", "org.teamvoided.templatemod.TemplateMod::clientInit")
+    entrypoint("main", "org.teamvoided.voided_utils.VoidedUtils::commonInit")
+    entrypoint("client", "org.teamvoided.voided_utils.VoidedUtils::clientInit")
+    entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtils::dataInit")
 
     mutation {
         custom = null
