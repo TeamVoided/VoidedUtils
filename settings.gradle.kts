@@ -7,6 +7,10 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.teamvoided.org/releases")
     }
+
+    plugins {
+        id("fabric-loom") version "1.2-SNAPSHOT"
+    }
 }
 
 rootProject.name = "VoidedUtils"

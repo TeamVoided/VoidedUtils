@@ -2,25 +2,32 @@ package org.teamvoided.voided_utils.registries
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 import org.teamvoided.voided_utils.VoidedUtils.id
+import org.teamvoided.voided_utils.registries.VUItems.items
+import java.util.*
 
 object VUITabs {
 
     private val SHIPPOST_TAB = register("shippost_tab")
 
+    private val itemStacks = LinkedList<ItemStack>()
     fun init() {
+        items.forEach { itemStacks.add(it.defaultStack) }
+
         Registry.register(
             Registries.ITEM_GROUP,
             SHIPPOST_TAB,
             FabricItemGroup.builder()
                 .icon { VUItems.TEST.defaultStack }
                 .name(Text.translatable("Voided Utils"))
-                .entries { _, entries -> entries.addAll(VUItems.ITEM_LIST)
+                .entries { _, entries ->
+                    entries.addStacks(itemStacks)
                 }.build()
         )
     }

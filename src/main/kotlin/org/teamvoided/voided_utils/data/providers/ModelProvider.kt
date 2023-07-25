@@ -12,6 +12,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
         gen.registerSimpleCubeAll(VUBlocks.CHARRED_PLANKS)
         gen.registerAxisRotated(VUBlocks.CHARRED_LOG, id("charred_log"))
+        gen.registerAxisRotated(VUBlocks.CHARRED_WOOD, id("charred_wood"))
         gen.registerAxisRotated(VUBlocks.STRIPPED_CHARRED_LOG, id("stripped_charred_log"))
     }
 
