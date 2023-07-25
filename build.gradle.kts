@@ -29,6 +29,20 @@ modSettings {
     }
 }
 
+
+loom {
+    runs {
+        create("Data Generation Client"){
+            client()
+            configName = "Fabric Data"
+            ideConfigGenerated(true)
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.modid=voided_utils")
+            runDir("build/datagen")
+        }
+    }
+}
 tasks {
     val targetJavaVersion = 17
     withType<JavaCompile> {
@@ -43,5 +57,9 @@ tasks {
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
         withSourcesJar()
+
     }
+
 }
+
+sourceSets["main"].resources.srcDir("src/main/generated")

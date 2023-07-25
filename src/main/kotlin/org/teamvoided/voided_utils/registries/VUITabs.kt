@@ -11,7 +11,7 @@ import org.teamvoided.voided_utils.VoidedUtils.id
 
 object VUITabs {
 
-    val SHIPPOST_TAB = register("shippost_tab")
+    private val SHIPPOST_TAB = register("shippost_tab")
 
     fun init() {
         Registry.register(
@@ -19,9 +19,8 @@ object VUITabs {
             SHIPPOST_TAB,
             FabricItemGroup.builder()
                 .icon { VUItems.TEST.defaultStack }
-                .name(Text.of("Your mother+"))
-                .entries { _, entries ->
-                    entries.addStacks(VUItems.ITEM_LIST.shuffled())
+                .name(Text.translatable("Voided Utils"))
+                .entries { _, entries -> entries.addAll(VUItems.ITEM_LIST)
                 }.build()
         )
     }
