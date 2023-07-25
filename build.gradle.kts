@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.9.0"
     kotlin("plugin.serialization") version "1.9.0"
-    id("fabric-loom") version "1.2-SNAPSHOT"
     id("org.teamvoided.iridium") version "2.2.3"
     id("iridium.mod.build-script") version "2.2.3"
 }
@@ -11,7 +10,7 @@ plugins {
 group = project.properties["maven_group"]!!
 version = project.properties["mod_version"]!!
 base.archivesName.set(project.properties["archives_base_name"] as String)
-description = "TeamVoided Template Mod"
+description = "Many QoL features\nMany Util features"
 
 repositories {
     mavenCentral()
@@ -23,7 +22,7 @@ modSettings {
 
     entrypoint("main", "org.teamvoided.voided_utils.VoidedUtils::commonInit")
     entrypoint("client", "org.teamvoided.voided_utils.VoidedUtils::clientInit")
-    entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtilsData")
+    entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtils::onInitializeDataGenerator")
 
     mutation {
         custom = null
@@ -35,6 +34,15 @@ loom {
     runs {
         create("DataGen") {
             client()
+            ideConfigGenerated(true)
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.modid=${"voided_utils"}")
+            runDir("build/datagen")
+        }
+        create("data") {
+            client()
+            configName = "Custom Data"
             ideConfigGenerated(true)
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")

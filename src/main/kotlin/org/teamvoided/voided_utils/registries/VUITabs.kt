@@ -13,16 +13,14 @@ import org.teamvoided.voided_utils.registries.VUItems.items
 import java.util.*
 
 object VUITabs {
-
-    private val SHIPPOST_TAB = register("shippost_tab")
-
+    private val VOIDED_UTILS_TAB = register("voided_utils_tab")
     private val itemStacks = LinkedList<ItemStack>()
     fun init() {
         items.forEach { itemStacks.add(it.defaultStack) }
 
         Registry.register(
             Registries.ITEM_GROUP,
-            SHIPPOST_TAB,
+            VOIDED_UTILS_TAB,
             FabricItemGroup.builder()
                 .icon { VUItems.TEST.defaultStack }
                 .name(Text.translatable("Voided Utils"))

@@ -1,4 +1,4 @@
 # Voided Utils
 
-Many QoL fatures
+Many QoL features
 Many Util features

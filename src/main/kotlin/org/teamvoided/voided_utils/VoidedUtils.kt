@@ -1,5 +1,6 @@
 package org.teamvoided.voided_utils
 
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
@@ -28,7 +29,7 @@ object VoidedUtils {
         LOGGER.info("Hello from clientInit")
     }
 
-//    fun dataInit(gen: FabricDataGenerator) {
-//
-//    }
+    fun onInitializeDataGenerator(gen: FabricDataGenerator) {
+        LOGGER.info("Hello from DataInit")
+    }
 }
