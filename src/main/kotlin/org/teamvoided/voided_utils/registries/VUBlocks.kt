@@ -1,6 +1,8 @@
 package org.teamvoided.voided_utils.registries
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
+import net.fabricmc.fabric.api.`object`.builder.v1.block.type.BlockSetTypeRegistry
+import net.fabricmc.fabric.api.`object`.builder.v1.block.type.WoodTypeRegistry
 import net.minecraft.block.*
 import net.minecraft.block.PressurePlateBlock.ActivationRule
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -15,7 +17,6 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.SignType
 import net.minecraft.util.math.Direction
 import org.teamvoided.voided_utils.VoidedUtils.id
-import org.teamvoided.voided_utils.mixin.SignTypeMixin
 import org.teamvoided.voided_utils.registries.VUItems.ALL_ITEM_LIST
 import java.util.*
 
@@ -24,6 +25,10 @@ object VUBlocks {
 
     val BLOCK_LIST = LinkedList<Block>()
     val BLOCK_ITEM_LIST = LinkedList<Item>()
+
+    val CHARRED_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.registerWood(id("charred"))
+    val CHARRED_WOOD_TYPE: SignType = WoodTypeRegistry.register(id("charred"), CHARRED_BLOCK_SET_TYPE)
+
 
 
     val CHARRED_LOG: Block = registerWithItem("charred_log", createPillarBlock(MapColor.STONE))
@@ -87,11 +92,11 @@ object VUBlocks {
                 .strength(0.5f)
                 .lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
-            BlockSetType.OAK
+            CHARRED_BLOCK_SET_TYPE
         )
     )
 
-    val CHARRED_BUTTON: Block = registerWithItem("charred_button", createButtonBlock(BlockSetType.OAK))
+    val CHARRED_BUTTON: Block = registerWithItem("charred_button", createButtonBlock(CHARRED_BLOCK_SET_TYPE))
 
 
     val CHARRED_TRAPDOOR: Block = registerWithItem(
@@ -104,7 +109,7 @@ object VUBlocks {
                 .nonOpaque()
                 .allowsSpawning { _, _, _, _ -> false }
                 .lavaIgnitable(),
-            BlockSetType.OAK
+            CHARRED_BLOCK_SET_TYPE
         )
     )
 
@@ -118,18 +123,18 @@ object VUBlocks {
                 .nonOpaque()
                 .lavaIgnitable()
                 .pistonBehavior(PistonBehavior.DESTROY),
-            BlockSetType.OAK
+            CHARRED_BLOCK_SET_TYPE
         )
     )
 
-    val CHARRED_SIGN_TYPE: SignType = SignTypeMixin.registerNew(SignTypeMixin.invokeInit("charred", BlockSetType.OAK))
+
 
     val CHARRED_FENCE_GATE: Block = registerWithItem(
         "charred_fence_gate",
         FenceGateBlock(
             AbstractBlock.Settings.create().mapColor(CHARRED_PLANKS.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).strength(2.0f, 3.0f).lavaIgnitable(),
-            CHARRED_SIGN_TYPE
+            CHARRED_WOOD_TYPE
         )
     )
 
@@ -137,7 +142,7 @@ object VUBlocks {
         "charred_sign",
         SignBlock(
             AbstractBlock.Settings.create().mapColor(MapColor.STONE).solid().instrument(NoteBlockInstrument.BASS)
-                .noCollision().strength(1.0f).lavaIgnitable(), CHARRED_SIGN_TYPE
+                .noCollision().strength(1.0f).lavaIgnitable(), CHARRED_WOOD_TYPE
         )
     )
     val CHARRED_WALL_SIGN: Block = register(
@@ -151,7 +156,7 @@ object VUBlocks {
                 .strength(1.0f)
                 .dropsLike(CHARRED_SIGN)
                 .lavaIgnitable(),
-            CHARRED_SIGN_TYPE
+            CHARRED_WOOD_TYPE
         )
     )
 
@@ -160,7 +165,7 @@ object VUBlocks {
         CeilingHangingSignBlock(
             AbstractBlock.Settings.create().mapColor(CHARRED_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
-            CHARRED_SIGN_TYPE
+            CHARRED_WOOD_TYPE
         )
     )
 
@@ -175,7 +180,7 @@ object VUBlocks {
                 .strength(1.0f)
                 .lavaIgnitable()
                 .dropsLike(CHARRED_HANGING_SIGN),
-            CHARRED_SIGN_TYPE
+            CHARRED_WOOD_TYPE
         )
     )
 
