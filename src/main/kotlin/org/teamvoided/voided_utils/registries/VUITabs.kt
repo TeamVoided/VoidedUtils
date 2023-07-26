@@ -22,7 +22,7 @@ object VUITabs {
             Registries.ITEM_GROUP,
             VOIDED_UTILS_TAB,
             FabricItemGroup.builder()
-                .icon { VUItems.TEST.defaultStack }
+                .icon { VUItems.CHARRED_HANGING_SIGN.defaultStack }
                 .name(Text.translatable("Voided Utils"))
                 .entries { _, entries ->
                     entries.addStacks(itemStacks)

@@ -1,7 +1,8 @@
 package org.teamvoided.voided_utils
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.minecraft.block.Block
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
@@ -27,9 +28,7 @@ object VoidedUtils {
 
     fun clientInit() {
         LOGGER.info("Hello from clientInit")
-    }
-
-    fun onInitializeDataGenerator(gen: FabricDataGenerator) {
-        LOGGER.info("Hello from DataInit")
+        BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.CHARRED_DOOR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.CHARRED_TRAPDOOR, RenderLayer.getCutout());
     }
 }

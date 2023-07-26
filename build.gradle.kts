@@ -22,7 +22,7 @@ modSettings {
 
     entrypoint("main", "org.teamvoided.voided_utils.VoidedUtils::commonInit")
     entrypoint("client", "org.teamvoided.voided_utils.VoidedUtils::clientInit")
-    entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtils::onInitializeDataGenerator")
+    entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtilsData")
 
     mutation {
         custom = null
@@ -32,14 +32,6 @@ modSettings {
 
 loom {
     runs {
-        create("DataGen") {
-            client()
-            ideConfigGenerated(true)
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=${"voided_utils"}")
-            runDir("build/datagen")
-        }
         create("data") {
             client()
             configName = "Custom Data"
