@@ -34,7 +34,6 @@ loom {
     runs {
         create("data") {
             client()
-            configName = "Custom Data"
             ideConfigGenerated(true)
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
