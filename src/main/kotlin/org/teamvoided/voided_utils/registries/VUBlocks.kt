@@ -17,6 +17,10 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.SignType
 import net.minecraft.util.math.Direction
 import org.teamvoided.voided_utils.VoidedUtils.id
+import org.teamvoided.voided_utils.blocks.CustomHangingSignBlock
+import org.teamvoided.voided_utils.blocks.CustomSignBlock
+import org.teamvoided.voided_utils.blocks.CustomWallHangingSignBlock
+import org.teamvoided.voided_utils.blocks.CustomWallSignBlock
 import org.teamvoided.voided_utils.registries.VUItems.ALL_ITEM_LIST
 import java.util.*
 
@@ -29,9 +33,13 @@ object VUBlocks {
     val CHARRED_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.registerWood(id("charred"))
     val CHARRED_WOOD_TYPE: SignType = WoodTypeRegistry.register(id("charred"), CHARRED_BLOCK_SET_TYPE)
 
+    val CHARRED_SIGN_ID = id("entity/signs/charred")
+    val CHARRED_HANGING_SIGN_ID = id("entity/signs/hanging/charred")
 
-
+    @JvmField
     val CHARRED_LOG: Block = registerWithItem("charred_log", createPillarBlock(MapColor.STONE))
+
+    @JvmField
     val STRIPPED_CHARRED_LOG: Block = registerWithItem("stripped_charred_log", createPillarBlock(MapColor.STONE))
     val CHARRED_WOOD: Block = registerWithItem(
         "charred_wood",
@@ -77,7 +85,6 @@ object VUBlocks {
                 .lavaIgnitable()
         )
     )
-
 
 
     val CHARRED_PRESSURE_PLATE: Block = registerWithItem(
@@ -128,7 +135,6 @@ object VUBlocks {
     )
 
 
-
     val CHARRED_FENCE_GATE: Block = registerWithItem(
         "charred_fence_gate",
         FenceGateBlock(
@@ -138,16 +144,20 @@ object VUBlocks {
         )
     )
 
+
+
     val CHARRED_SIGN: Block = register(
         "charred_sign",
-        SignBlock(
+        CustomSignBlock(
+            CHARRED_SIGN_ID,
             AbstractBlock.Settings.create().mapColor(MapColor.STONE).solid().instrument(NoteBlockInstrument.BASS)
                 .noCollision().strength(1.0f).lavaIgnitable(), CHARRED_WOOD_TYPE
         )
     )
     val CHARRED_WALL_SIGN: Block = register(
         "charred_wall_sign",
-        WallSignBlock(
+        CustomWallSignBlock(
+            CHARRED_SIGN_ID,
             AbstractBlock.Settings.create()
                 .mapColor(MapColor.STONE)
                 .solid()
@@ -162,7 +172,8 @@ object VUBlocks {
 
     val CHARRED_HANGING_SIGN: Block = register(
         "charred_hanging_sign",
-        CeilingHangingSignBlock(
+        CustomHangingSignBlock(
+            CHARRED_HANGING_SIGN_ID,
             AbstractBlock.Settings.create().mapColor(CHARRED_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
             CHARRED_WOOD_TYPE
@@ -171,7 +182,8 @@ object VUBlocks {
 
     val CHARRED_WALL_HANGING_SIGN: Block = register(
         "charred_wall_hanging_sign",
-        WallHangingSignBlock(
+        CustomWallHangingSignBlock(
+            CHARRED_HANGING_SIGN_ID,
             AbstractBlock.Settings.create()
                 .mapColor(CHARRED_LOG.defaultMapColor)
                 .solid()

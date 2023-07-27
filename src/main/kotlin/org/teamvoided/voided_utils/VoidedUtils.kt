@@ -7,9 +7,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.block.Block
 import net.minecraft.client.option.KeyBind
 import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
-import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer
-import net.minecraft.client.render.block.entity.SignBlockEntityRenderer
+import net.minecraft.client.render.TexturedRenderLayers
+import net.minecraft.client.resource.Material
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
@@ -58,8 +57,11 @@ object VoidedUtils {
         LOGGER.info("Hello from clientInit")
         BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.CHARRED_DOOR, RenderLayer.getCutout())
         BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.CHARRED_TRAPDOOR, RenderLayer.getCutout())
+        MaterialRegistry.addIdentifier(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_SIGN_ID))
+        MaterialRegistry.addIdentifier(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_HANGING_SIGN_ID))
 
-        BlockEntityRendererFactories.register(VUBlockEntities.CUSTOM_SIGN, ::SignBlockEntityRenderer)
-        BlockEntityRendererFactories.register(VUBlockEntities.CUSTOM_HANGING_SIGN, ::HangingSignBlockEntityRenderer)
+//        BlockEntityRendererFactories.register(VUBlockEntities.CUSTOM_SIGN, ::SignBlockEntityRenderer)
+//        BlockEntityRendererFactories.register(VUBlockEntities.CUSTOM_HANGING_SIGN, ::HangingSignBlockEntityRenderer)
+
     }
 }

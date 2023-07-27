@@ -14,6 +14,15 @@ description = "Many QoL features\nMany Util features"
 
 repositories {
     mavenCentral()
+    maven {
+        name = "TerraformersMC"
+        url = uri("https://maven.terraformersmc.com/")
+    }
+}
+
+dependencies {
+    modImplementation("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")?.let { include(it) }
+    annotationProcessor("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")
 }
 
 modSettings {
