@@ -7,7 +7,6 @@ import net.minecraft.item.SignItem
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.voided_utils.VoidedUtils.id
-import org.teamvoided.voided_utils.registries.VUBlocks.CHARRED_WALL_SIGN
 import java.util.*
 
 object VUItems {
@@ -18,7 +17,7 @@ object VUItems {
     private val settings: FabricItemSettings = FabricItemSettings().maxCount(64)
 
 
-    val CHARRED_SIGN = register("charred_sign", SignItem(Item.Settings().maxCount(16), VUBlocks.CHARRED_SIGN, CHARRED_WALL_SIGN))
+    val CHARRED_SIGN = register("charred_sign", SignItem(Item.Settings().maxCount(16), VUBlocks.CHARRED_SIGN, VUBlocks.CHARRED_WALL_SIGN))
 
     val CHARRED_HANGING_SIGN: Item = register(
         "charred_hanging_sign",

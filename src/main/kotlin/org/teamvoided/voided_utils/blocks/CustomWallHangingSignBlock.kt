@@ -4,5 +4,5 @@ import net.minecraft.block.WallHangingSignBlock
 import net.minecraft.util.Identifier
 import net.minecraft.util.SignType
 
-class CustomWallHangingSignBlock(override val texture: Identifier, settings: Settings, signType: SignType?) :
+class CustomWallHangingSignBlock(override var texture: Identifier, settings: Settings, signType: SignType?) :
     WallHangingSignBlock(settings, signType), CustomSign

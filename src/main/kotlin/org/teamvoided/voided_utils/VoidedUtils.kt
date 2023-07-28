@@ -14,10 +14,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 import org.slf4j.LoggerFactory
-import org.teamvoided.voided_utils.registries.VUBlockEntities
-import org.teamvoided.voided_utils.registries.VUBlocks
-import org.teamvoided.voided_utils.registries.VUITabs
-import org.teamvoided.voided_utils.registries.VUItems
+import org.teamvoided.voided_utils.registries.*
 
 @Suppress("unused")
 object VoidedUtils {
@@ -31,7 +28,7 @@ object VoidedUtils {
         LOGGER.info("Hello from Common")
         VUItems.init()
         VUBlocks.init()
-        VUBlockEntities.init()
+        VUSigns.init()
         VUITabs.init()
 
         ClientTickEvents.END_CLIENT_TICK.register(
@@ -57,11 +54,11 @@ object VoidedUtils {
         LOGGER.info("Hello from clientInit")
         BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.CHARRED_DOOR, RenderLayer.getCutout())
         BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.CHARRED_TRAPDOOR, RenderLayer.getCutout())
+        BlockRenderLayerMap.INSTANCE.putBlock(VUBlocks.REDSTONE_LANTERN, RenderLayer.getCutout())
+
         MaterialRegistry.addIdentifier(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_SIGN_ID))
         MaterialRegistry.addIdentifier(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_HANGING_SIGN_ID))
 
-//        BlockEntityRendererFactories.register(VUBlockEntities.CUSTOM_SIGN, ::SignBlockEntityRenderer)
-//        BlockEntityRendererFactories.register(VUBlockEntities.CUSTOM_HANGING_SIGN, ::HangingSignBlockEntityRenderer)
-
+        MaterialRegistry.getIdentifiers().stream().forEach { LOGGER.info(it.toString()) }
     }
 }

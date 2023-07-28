@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class TexturedRenderLayersMixin {
     @Inject(method = "addDefaultTextures", at = @At("RETURN"))
-    private static void injectSigns(Consumer<Material> consumer, CallbackInfo info) {
+    private static void addCustomSigns(Consumer<Material> consumer, CallbackInfo info) {
         MaterialRegistry.INSTANCE.getIdentifiers().forEach(consumer);
     }
 }

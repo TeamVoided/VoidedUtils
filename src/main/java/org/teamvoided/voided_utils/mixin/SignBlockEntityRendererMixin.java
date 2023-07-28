@@ -17,6 +17,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.voided_utils.blocks.CustomSign;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 @Mixin(SignBlockEntityRenderer.class)
 public class SignBlockEntityRendererMixin {
 
@@ -24,7 +26,7 @@ public class SignBlockEntityRendererMixin {
     protected SignBlockEntity renderedBlockEntity;
 
     @WrapOperation(
-            method = "render",
+            method = "render(Lnet/minecraft/block/entity/SignBlockEntity;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/block/BlockState;Lnet/minecraft/block/AbstractSignBlock;Lnet/minecraft/util/SignType;Lnet/minecraft/client/model/Model;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/block/entity/SignBlockEntityRenderer;renderModel(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/util/SignType;Lnet/minecraft/client/model/Model;)V")
     )
     @SuppressWarnings("unused")
@@ -37,9 +39,12 @@ public class SignBlockEntityRendererMixin {
 
     @Inject(method = "getSignTexture", at = @At("HEAD"), cancellable = true)
     private void getSignTexture(CallbackInfoReturnable<Material> ci) {
+        LOGGER.info(this.getClass().getSimpleName());
         if (this.renderedBlockEntity != null) {
             if (this.renderedBlockEntity.getCachedState().getBlock() instanceof CustomSign signBlock) {
                 ci.setReturnValue(new Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, signBlock.getTexture()));
+                LOGGER.info("Happens here");
+                ci.cancel();
             }
         }
     }

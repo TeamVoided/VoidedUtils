@@ -14,17 +14,22 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     )
 
 
-
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
+        try {
 
-        logs.forEach { gen.registerLog(it.log).log(it.log).wood(it.wood) }
 
-        gen.registerCubeAllModelTexturePool(VUBlocks.CHARRED_PLANKS).family(VUBlocks.CHARRED)
-        gen.method_46190(
-            VUBlocks.STRIPPED_CHARRED_LOG,
-            VUBlocks.CHARRED_HANGING_SIGN,
-            VUBlocks.CHARRED_WALL_HANGING_SIGN
-        )
+            logs.forEach { gen.registerLog(it.log).log(it.log).wood(it.wood) }
+
+            gen.registerLantern(VUBlocks.REDSTONE_LANTERN)
+
+            gen.registerCubeAllModelTexturePool(VUBlocks.CHARRED_PLANKS).family(VUBlocks.CHARRED)
+            gen.method_46190(
+                VUBlocks.STRIPPED_CHARRED_LOG,
+                VUBlocks.CHARRED_HANGING_SIGN,
+                VUBlocks.CHARRED_WALL_HANGING_SIGN
+            )
+        } catch (_: Exception) {
+        }
 
 
     }

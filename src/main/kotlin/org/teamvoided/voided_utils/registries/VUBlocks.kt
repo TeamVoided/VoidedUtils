@@ -1,8 +1,10 @@
 package org.teamvoided.voided_utils.registries
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
+import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.`object`.builder.v1.block.type.BlockSetTypeRegistry
 import net.fabricmc.fabric.api.`object`.builder.v1.block.type.WoodTypeRegistry
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.block.*
 import net.minecraft.block.PressurePlateBlock.ActivationRule
 import net.minecraft.block.enums.NoteBlockInstrument
@@ -17,10 +19,7 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.SignType
 import net.minecraft.util.math.Direction
 import org.teamvoided.voided_utils.VoidedUtils.id
-import org.teamvoided.voided_utils.blocks.CustomHangingSignBlock
-import org.teamvoided.voided_utils.blocks.CustomSignBlock
-import org.teamvoided.voided_utils.blocks.CustomWallHangingSignBlock
-import org.teamvoided.voided_utils.blocks.CustomWallSignBlock
+import org.teamvoided.voided_utils.blocks.*
 import org.teamvoided.voided_utils.registries.VUItems.ALL_ITEM_LIST
 import java.util.*
 
@@ -32,9 +31,6 @@ object VUBlocks {
 
     val CHARRED_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.registerWood(id("charred"))
     val CHARRED_WOOD_TYPE: SignType = WoodTypeRegistry.register(id("charred"), CHARRED_BLOCK_SET_TYPE)
-
-    val CHARRED_SIGN_ID = id("entity/signs/charred")
-    val CHARRED_HANGING_SIGN_ID = id("entity/signs/hanging/charred")
 
     @JvmField
     val CHARRED_LOG: Block = registerWithItem("charred_log", createPillarBlock(MapColor.STONE))
@@ -144,29 +140,23 @@ object VUBlocks {
         )
     )
 
-
+    val CHARRED_SIGN_ID = id("entity/signs/charred")
+    val CHARRED_HANGING_SIGN_ID = id("entity/signs/hanging/charred")
 
     val CHARRED_SIGN: Block = register(
         "charred_sign",
         CustomSignBlock(
             CHARRED_SIGN_ID,
-            AbstractBlock.Settings.create().mapColor(MapColor.STONE).solid().instrument(NoteBlockInstrument.BASS)
-                .noCollision().strength(1.0f).lavaIgnitable(), CHARRED_WOOD_TYPE
+            FabricBlockSettings.copyOf(Blocks.OAK_SIGN),
+            SignType.OAK
         )
     )
     val CHARRED_WALL_SIGN: Block = register(
         "charred_wall_sign",
         CustomWallSignBlock(
             CHARRED_SIGN_ID,
-            AbstractBlock.Settings.create()
-                .mapColor(MapColor.STONE)
-                .solid()
-                .instrument(NoteBlockInstrument.BASS)
-                .noCollision()
-                .strength(1.0f)
-                .dropsLike(CHARRED_SIGN)
-                .lavaIgnitable(),
-            CHARRED_WOOD_TYPE
+            FabricBlockSettings.copyOf(Blocks.OAK_WALL_SIGN),
+            SignType.OAK
         )
     )
 
@@ -196,7 +186,17 @@ object VUBlocks {
         )
     )
 
-    fun init() {}
+
+    val REDSTONE_LANTERN: Block = registerWithItem("redstone_lantern", RedstoneLanternBlock(
+        FabricBlockSettings.copyOf(Blocks.LANTERN)
+            .luminance { if (it.get(RedstoneLanternBlock.LIT)) 7 else 0 }
+    ))
+
+    fun init() {
+        StrippableBlockRegistry.register(CHARRED_LOG, STRIPPED_CHARRED_LOG)
+        StrippableBlockRegistry.register(CHARRED_WOOD, STRIPPED_CHARRED_WOOD)
+    }
+
     private fun registerWithItem(id: String, block: Block): Block {
         val item = Registry.register(Registries.ITEM, id(id), BlockItem(block, FabricItemSettings()))
         BLOCK_ITEM_LIST.add(item)
@@ -204,7 +204,7 @@ object VUBlocks {
         return register(id, block)
     }
 
-    private fun register(id: String, block: Block): Block {
+    fun register(id: String, block: Block): Block {
         val regBlock = Registry.register(Registries.BLOCK, id(id), block)
         BLOCK_LIST.add(regBlock)
         return regBlock
@@ -233,6 +233,7 @@ object VUBlocks {
         30,
         true
     )
+
 
     val CHARRED: BlockFamily = BlockFamilies.register(CHARRED_PLANKS)
         .button(CHARRED_BUTTON)

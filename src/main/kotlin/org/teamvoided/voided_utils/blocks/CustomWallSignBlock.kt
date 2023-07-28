@@ -4,5 +4,5 @@ import net.minecraft.block.WallSignBlock
 import net.minecraft.util.Identifier
 import net.minecraft.util.SignType
 
-class CustomWallSignBlock(override val texture: Identifier, settings: Settings, signType: SignType) :
+class CustomWallSignBlock(override var texture: Identifier, settings: Settings, signType: SignType) :
     WallSignBlock(settings, signType), CustomSign
