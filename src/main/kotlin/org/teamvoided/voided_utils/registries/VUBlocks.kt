@@ -18,6 +18,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.SignType
 import net.minecraft.util.math.Direction
+import org.teamvoided.voided_utils.VoidedUtils
 import org.teamvoided.voided_utils.VoidedUtils.id
 import org.teamvoided.voided_utils.blocks.*
 import org.teamvoided.voided_utils.registries.VUItems.ALL_ITEM_LIST
@@ -29,14 +30,16 @@ object VUBlocks {
     val BLOCK_LIST = LinkedList<Block>()
     val BLOCK_ITEM_LIST = LinkedList<Item>()
 
+
     val CHARRED_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.registerWood(id("charred"))
     val CHARRED_WOOD_TYPE: SignType = WoodTypeRegistry.register(id("charred"), CHARRED_BLOCK_SET_TYPE)
 
     @JvmField
-    val CHARRED_LOG: Block = registerWithItem("charred_log", createPillarBlock(MapColor.STONE))
+    val CHARRED_LOG: Block = createPillarBlock(MapColor.STONE)
 
     @JvmField
-    val STRIPPED_CHARRED_LOG: Block = registerWithItem("stripped_charred_log", createPillarBlock(MapColor.STONE))
+    val STRIPPED_CHARRED_LOG: Block = createPillarBlock(MapColor.STONE)
+
     val CHARRED_WOOD: Block = registerWithItem(
         "charred_wood",
         PillarBlock(
@@ -160,42 +163,47 @@ object VUBlocks {
         )
     )
 
-    val CHARRED_HANGING_SIGN: Block = register(
-        "charred_hanging_sign",
+    val CHARRED_HANGING_SIGN: Block =
         CustomHangingSignBlock(
             CHARRED_HANGING_SIGN_ID,
             AbstractBlock.Settings.create().mapColor(CHARRED_LOG.defaultMapColor).solid()
                 .instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0f).lavaIgnitable(),
             CHARRED_WOOD_TYPE
         )
-    )
 
-    val CHARRED_WALL_HANGING_SIGN: Block = register(
-        "charred_wall_hanging_sign",
-        CustomWallHangingSignBlock(
-            CHARRED_HANGING_SIGN_ID,
-            AbstractBlock.Settings.create()
-                .mapColor(CHARRED_LOG.defaultMapColor)
-                .solid()
-                .instrument(NoteBlockInstrument.BASS)
-                .noCollision()
-                .strength(1.0f)
-                .lavaIgnitable()
-                .dropsLike(CHARRED_HANGING_SIGN),
-            CHARRED_WOOD_TYPE
-        )
+    val CHARRED_WALL_HANGING_SIGN: Block = CustomWallHangingSignBlock(
+        CHARRED_HANGING_SIGN_ID,
+        FabricBlockSettings.copyOf(Blocks.OAK_WALL_HANGING_SIGN)
+            .mapColor(CHARRED_LOG.defaultMapColor)
+            .dropsLike(CHARRED_HANGING_SIGN),
+        CHARRED_WOOD_TYPE
     )
 
 
-    val REDSTONE_LANTERN: Block = registerWithItem("redstone_lantern", RedstoneLanternBlock(
-        FabricBlockSettings.copyOf(Blocks.LANTERN)
-            .luminance { if (it.get(RedstoneLanternBlock.LIT)) 7 else 0 }
-    ))
+    val REDSTONE_LANTERN: Block = RedstoneLanternBlock(
+        FabricBlockSettings.copyOf(Blocks.LANTERN).luminance { if (it.get(RedstoneLanternBlock.LIT)) 7 else 0 })
+
 
     fun init() {
-        StrippableBlockRegistry.register(CHARRED_LOG, STRIPPED_CHARRED_LOG)
-        StrippableBlockRegistry.register(CHARRED_WOOD, STRIPPED_CHARRED_WOOD)
+        val c = VoidedUtils.getConfig()
+
+        if (c.enableRedstoneLantern) registerWithItem("redstone_lantern", REDSTONE_LANTERN)
+
+        if (c.enableCharredWoodSet) {
+            registerWithItem("charred_log", CHARRED_LOG)
+            registerWithItem("stripped_charred_log", STRIPPED_CHARRED_LOG)
+
+            register("charred_hanging_sign",CHARRED_HANGING_SIGN)
+            register("charred_wall_hanging_sign", CHARRED_WALL_HANGING_SIGN)
+
+            StrippableBlockRegistry.register(CHARRED_LOG, STRIPPED_CHARRED_LOG)
+            StrippableBlockRegistry.register(CHARRED_WOOD, STRIPPED_CHARRED_WOOD)
+        }
+
+
     }
+
+    val CUTOUT_LIST: List<Block> = listOf(CHARRED_DOOR, CHARRED_TRAPDOOR, REDSTONE_LANTERN)
 
     private fun registerWithItem(id: String, block: Block): Block {
         val item = Registry.register(Registries.ITEM, id(id), BlockItem(block, FabricItemSettings()))

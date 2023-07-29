@@ -13,7 +13,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.random.RandomGenerator
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import org.teamvoided.voided_utils.VoidedUtils.LOGGER
 @Suppress("OVERRIDE_DEPRECATION")
 class RedstoneLanternBlock(settings: FabricBlockSettings) : LanternBlock(settings) {
     init {
@@ -70,11 +69,8 @@ class RedstoneLanternBlock(settings: FabricBlockSettings) : LanternBlock(setting
 
     private fun shouldUnpower(world: World, pos: BlockPos, state: BlockState): Boolean {
         if (state.get(HANGING)) {
-            LOGGER.info("h")
             return world.isEmittingRedstonePower(pos.up(), Direction.UP)
         }
-
-        LOGGER.info("2")
         return world.isEmittingRedstonePower(pos.down(), Direction.DOWN)
     }
 
