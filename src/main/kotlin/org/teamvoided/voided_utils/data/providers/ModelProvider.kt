@@ -20,8 +20,6 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
 
             logs.forEach { gen.registerLog(it.log).log(it.log).wood(it.wood) }
 
-            gen.registerLantern(VUBlocks.REDSTONE_LANTERN)
-
             gen.registerCubeAllModelTexturePool(VUBlocks.CHARRED_PLANKS).family(VUBlocks.CHARRED)
             gen.method_46190(
                 VUBlocks.STRIPPED_CHARRED_LOG,
