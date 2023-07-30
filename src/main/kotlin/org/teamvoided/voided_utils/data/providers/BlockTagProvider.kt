@@ -15,13 +15,13 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
     FabricTagProvider.BlockTagProvider(output, registriesFuture) {
 
 
-    val CHARRED_LOGS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("charred_logs"))
     override fun configure(arg: HolderLookup.Provider) {
-        getOrCreateTagBuilder(CHARRED_LOGS)
-            .add(VUBlocks.CHARRED_LOG)
-            .add(VUBlocks.STRIPPED_CHARRED_LOG)
-            .add(VUBlocks.CHARRED_WOOD)
-            .add(VUBlocks.STRIPPED_CHARRED_WOOD)
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+            .add(VUBlocks.IRON_COATED_DOOR)
+            .add(VUBlocks.IRON_COATED_TRAPDOOR)
+
+
+
 
 
         getOrCreateTagBuilder(BlockTags.FENCES)
@@ -36,6 +36,9 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
         getOrCreateTagBuilder(BlockTags.WOODEN_DOORS)
             .add(VUBlocks.CHARRED_DOOR)
 
+        getOrCreateTagBuilder(BlockTags.DOORS)
+            .add(VUBlocks.IRON_COATED_DOOR)
+
         getOrCreateTagBuilder(BlockTags.WOODEN_SLABS)
             .add(VUBlocks.CHARRED_SLAB)
 
@@ -48,6 +51,9 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
 
         getOrCreateTagBuilder(BlockTags.WOODEN_TRAPDOORS)
             .add(VUBlocks.CHARRED_TRAPDOOR)
+
+        getOrCreateTagBuilder(BlockTags.TRAPDOORS)
+            .add(VUBlocks.IRON_COATED_TRAPDOOR)
 
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
             .addTag(CHARRED_LOGS)
@@ -70,5 +76,26 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
         getOrCreateTagBuilder(BlockTags.FENCE_GATES)
             .add(VUBlocks.CHARRED_FENCE_GATE)
 
+        VUBlocks.TOGGLEABLE_BUTTONS.forEach {
+            getOrCreateTagBuilder(BlockTags.BUTTONS)
+                .add(it)
+            getOrCreateTagBuilder(TOGGLEABLE_BUTTONS)
+                .add(it)
+        }
+
+
+
+
+        getOrCreateTagBuilder(CHARRED_LOGS)
+            .add(VUBlocks.CHARRED_LOG)
+            .add(VUBlocks.STRIPPED_CHARRED_LOG)
+            .add(VUBlocks.CHARRED_WOOD)
+            .add(VUBlocks.STRIPPED_CHARRED_WOOD)
+
+    }
+
+    companion object{
+        val CHARRED_LOGS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("charred_logs"))
+        val TOGGLEABLE_BUTTONS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("toggleable_buttons"))
     }
 }

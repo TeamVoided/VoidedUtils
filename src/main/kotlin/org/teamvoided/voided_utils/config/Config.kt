@@ -18,8 +18,8 @@ object Config {
         1,
         enableRedstoneLantern = true,
         enableCharredWoodSet = true,
-        enableButtonLevers = true,
-        enableIronTrapdoor = true
+        enableToggleButtons = true,
+        enableIronCoatedBlocks = true
     )
     private val configFile: File = FabricLoader.getInstance().configDir.resolve("$MODID.json").toFile()
 
@@ -47,6 +47,6 @@ data class ConfigData(
     val version: Int,
     val enableRedstoneLantern: Boolean,
     val enableCharredWoodSet: Boolean,
-    val enableButtonLevers: Boolean,
-    val enableIronTrapdoor: Boolean
+    val enableToggleButtons: Boolean,
+    val enableIronCoatedBlocks: Boolean
 )

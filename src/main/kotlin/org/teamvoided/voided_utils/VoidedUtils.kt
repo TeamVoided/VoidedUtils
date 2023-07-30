@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.teamvoided.scuffedlib.sign.MaterialRegistry
 import org.teamvoided.voided_utils.config.Config
 import org.teamvoided.voided_utils.config.ConfigData
 import org.teamvoided.voided_utils.misc.Keybinds
@@ -38,10 +39,8 @@ object VoidedUtils {
 
         val c = getConfig()
         if (c.enableCharredWoodSet) {
-            MaterialRegistry.addIdentifier(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_SIGN_ID))
-            MaterialRegistry.addIdentifier(
-                Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_HANGING_SIGN_ID)
-            )
+            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_SIGN_ID))
+            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_HANGING_SIGN_ID))
         }
     }
 

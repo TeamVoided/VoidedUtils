@@ -23,6 +23,7 @@ repositories {
 dependencies {
     modImplementation("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")?.let { include(it) }
     annotationProcessor("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")
+    modImplementation(files("scuffedlib-1.0.0+1.20.1.jar"))
 }
 
 modSettings {
@@ -33,9 +34,7 @@ modSettings {
     entrypoint("client", "org.teamvoided.voided_utils.VoidedUtils::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtilsData")
 
-    mutation {
-        custom = null
-    }
+    isModParent(true)
 }
 
 

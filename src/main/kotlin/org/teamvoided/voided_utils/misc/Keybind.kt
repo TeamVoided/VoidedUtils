@@ -6,15 +6,16 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBind
 import org.lwjgl.glfw.GLFW
 import org.teamvoided.voided_utils.VoidedUtils
+import org.teamvoided.voided_utils.VoidedUtils.MODID
 
 object Keybinds {
 
     private val configKey: KeyBind = KeyBindingHelper.registerKeyBinding(
         KeyBind(
-            "key.block_beams.config",
+            "key.$MODID.config",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN,
-            "category.block_beams.generic"
+            "category.$MODID.generic"
         )
     )
 
