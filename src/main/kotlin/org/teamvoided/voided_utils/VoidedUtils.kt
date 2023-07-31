@@ -28,7 +28,7 @@ object VoidedUtils {
 
     fun commonInit() {
         Config.load()
-        LOGGER.info("Hello from Common")
+        LOGGER.info("Utilizing your eRam and qRam")
         VUItems.init()
         VUBlocks.init()
         VUITabs.init()
@@ -37,7 +37,6 @@ object VoidedUtils {
     }
 
     fun clientInit() {
-        LOGGER.info("Hello from clientInit")
         VUBlocks.CUTOUT_LIST.forEach { BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout()) }
 
         val c = getConfig()

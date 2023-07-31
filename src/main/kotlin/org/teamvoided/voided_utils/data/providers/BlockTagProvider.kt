@@ -3,6 +3,7 @@ package org.teamvoided.voided_utils.data.providers
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
@@ -92,10 +93,22 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
             .add(VUBlocks.CHARRED_WOOD)
             .add(VUBlocks.STRIPPED_CHARRED_WOOD)
 
+        getOrCreateTagBuilder(SHEARS_MINEABLE_FAST)
+            .add(Blocks.COBWEB)
+            .forceAddTag(BlockTags.LEAVES)
+
+        getOrCreateTagBuilder(SHEARS_MINEABLE_SLOW)
+            .forceAddTag(BlockTags.WOOL)
+
     }
 
     companion object{
         val CHARRED_LOGS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("charred_logs"))
         val TOGGLEABLE_BUTTONS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("toggleable_buttons"))
+        @JvmField
+        val SHEARS_MINEABLE_FAST: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("mineable/shears/fast"))
+        @JvmField
+        val SHEARS_MINEABLE_SLOW: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("mineable/shears/slow"))
+
     }
 }
