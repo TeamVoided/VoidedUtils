@@ -12,6 +12,7 @@ import net.minecraft.data.client.model.Texture
 import net.minecraft.item.Item
 import net.minecraft.util.Identifier
 import org.teamvoided.voided_utils.VoidedUtils.getId
+import org.teamvoided.voided_utils.VoidedUtils.mc
 import org.teamvoided.voided_utils.blocks.AbstractToggleableButtonBlock
 import org.teamvoided.voided_utils.registries.VUBlocks
 
@@ -32,12 +33,13 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
                 VUBlocks.CHARRED_HANGING_SIGN,
                 VUBlocks.CHARRED_WALL_HANGING_SIGN
             )
-            registerTrapdoor(VUBlocks.IRON_COATED_TRAPDOOR, Identifier("block/iron_trapdoor"), gen)
-            registerDoor(VUBlocks.IRON_COATED_DOOR, Blocks.IRON_DOOR, Identifier("item/iron_door"), gen)
+            registerTrapdoor(VUBlocks.IRON_COATED_TRAPDOOR, mc("block/iron_trapdoor"), gen)
+            registerDoor(VUBlocks.IRON_COATED_DOOR, Blocks.IRON_DOOR, mc("item/iron_door"), gen)
             VUBlocks.TOGGLEABLE_BUTTONS.forEach { block ->
                 val base = getId((block as AbstractToggleableButtonBlock).buttonBlock).path.removeSuffix("_button")
                 LOGGER.info(base)
-                button(block, Identifier("block/$base"), gen) }
+                button(block, mc("block/$base"), gen)
+            }
         } catch (_: Exception) {
         }
 
@@ -48,61 +50,36 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
 
     private fun registerTrapdoor(trapdoorBlock: Block, customTexture: Identifier, gen: BlockStateModelGenerator) {
         val texture = Texture.texture(customTexture)
-        val identifier = Models.TEMPLATE_TRAPDOOR_TOP.upload(trapdoorBlock, texture, gen.modelCollector)
-        val identifier2 = Models.TEMPLATE_TRAPDOOR_BOTTOM.upload(trapdoorBlock, texture, gen.modelCollector)
-        val identifier3 = Models.TEMPLATE_TRAPDOOR_OPEN.upload(trapdoorBlock, texture, gen.modelCollector)
-        gen.blockStateCollector.accept(
-            BlockStateModelGenerator.createTrapdoorBlockState(
-                trapdoorBlock,
-                identifier,
-                identifier2,
-                identifier3
-            )
-        )
-        gen.registerParentedItemModel(trapdoorBlock, identifier2)
+        val id = Models.TEMPLATE_TRAPDOOR_TOP.upload(trapdoorBlock, texture, gen.modelCollector)
+        val id2 = Models.TEMPLATE_TRAPDOOR_BOTTOM.upload(trapdoorBlock, texture, gen.modelCollector)
+        val id3 = Models.TEMPLATE_TRAPDOOR_OPEN.upload(trapdoorBlock, texture, gen.modelCollector)
+        gen.blockStateCollector.accept(BlockStateModelGenerator.createTrapdoorBlockState(trapdoorBlock, id, id2, id3))
+        gen.registerParentedItemModel(trapdoorBlock, id2)
     }
 
     private fun registerDoor(doorBlock: Block, block: Block, customTexture: Identifier, gen: BlockStateModelGenerator) {
-        val texture = Texture.topBottom(block)
-        val identifier = Models.DOOR_BOTTOM_LEFT.upload(doorBlock, texture, gen.modelCollector)
-        val identifier2 = Models.DOOR_BOTTOM_LEFT_OPEN.upload(doorBlock, texture, gen.modelCollector)
-        val identifier3 = Models.DOOR_BOTTOM_RIGHT.upload(doorBlock, texture, gen.modelCollector)
-        val identifier4 = Models.DOOR_BOTTOM_RIGHT_OPEN.upload(doorBlock, texture, gen.modelCollector)
-        val identifier5 = Models.DOOR_TOP_LEFT.upload(doorBlock, texture, gen.modelCollector)
-        val identifier6 = Models.DOOR_TOP_LEFT_OPEN.upload(doorBlock, texture, gen.modelCollector)
-        val identifier7 = Models.DOOR_TOP_RIGHT.upload(doorBlock, texture, gen.modelCollector)
-        val identifier8 = Models.DOOR_TOP_RIGHT_OPEN.upload(doorBlock, texture, gen.modelCollector)
+        val tex = Texture.topBottom(block)
+        val id = Models.DOOR_BOTTOM_LEFT.upload(doorBlock, tex, gen.modelCollector)
+        val id2 = Models.DOOR_BOTTOM_LEFT_OPEN.upload(doorBlock, tex, gen.modelCollector)
+        val id3 = Models.DOOR_BOTTOM_RIGHT.upload(doorBlock, tex, gen.modelCollector)
+        val id4 = Models.DOOR_BOTTOM_RIGHT_OPEN.upload(doorBlock, tex, gen.modelCollector)
+        val id5 = Models.DOOR_TOP_LEFT.upload(doorBlock, tex, gen.modelCollector)
+        val id6 = Models.DOOR_TOP_LEFT_OPEN.upload(doorBlock, tex, gen.modelCollector)
+        val id7 = Models.DOOR_TOP_RIGHT.upload(doorBlock, tex, gen.modelCollector)
+        val id8 = Models.DOOR_TOP_RIGHT_OPEN.upload(doorBlock, tex, gen.modelCollector)
         registerItemModel(doorBlock.asItem(), customTexture, gen)
         gen.blockStateCollector.accept(
-            BlockStateModelGenerator.method_25609(
-                doorBlock,
-                identifier,
-                identifier2,
-                identifier3,
-                identifier4,
-                identifier5,
-                identifier6,
-                identifier7,
-                identifier8
-            )
+            BlockStateModelGenerator.method_25609(doorBlock, id, id2, id3, id4, id5, id6, id7, id8)
         )
     }
 
     private fun button(buttonBlock: Block, customTexture: Identifier, gen: BlockStateModelGenerator) {
         val texture = Texture.texture(customTexture)
-        val identifier = Models.BUTTON.upload(buttonBlock, texture, gen.modelCollector)
-        val identifier2 =
-            Models.BUTTON_PRESSED.upload(buttonBlock, texture, gen.modelCollector)
-        gen.blockStateCollector.accept(
-            BlockStateModelGenerator.createButtonBlockState(
-                buttonBlock,
-                identifier,
-                identifier2
-            )
-        )
-        val identifier3 =
-            Models.BUTTON_INVENTORY.upload(buttonBlock, texture, gen.modelCollector)
-        gen.registerParentedItemModel(buttonBlock, identifier3)
+        val id = Models.BUTTON.upload(buttonBlock, texture, gen.modelCollector)
+        val id2 = Models.BUTTON_PRESSED.upload(buttonBlock, texture, gen.modelCollector)
+        gen.blockStateCollector.accept(BlockStateModelGenerator.createButtonBlockState(buttonBlock, id, id2))
+        val id3 = Models.BUTTON_INVENTORY.upload(buttonBlock, texture, gen.modelCollector)
+        gen.registerParentedItemModel(buttonBlock, id3)
     }
 
     private fun registerItemModel(item: Item, customTexture: Identifier, gen: BlockStateModelGenerator) {

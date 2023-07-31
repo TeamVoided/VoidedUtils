@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory
 import org.teamvoided.scuffedlib.sign.MaterialRegistry
 import org.teamvoided.voided_utils.config.Config
 import org.teamvoided.voided_utils.config.ConfigData
+import org.teamvoided.voided_utils.misc.Injections
 import org.teamvoided.voided_utils.misc.Keybinds
 import org.teamvoided.voided_utils.registries.*
 
@@ -21,6 +22,7 @@ object VoidedUtils {
     const val MODID = "voided_utils"
     val LOGGER: Logger = LoggerFactory.getLogger(VoidedUtils::class.java)
     fun id(path: String): Identifier = Identifier(MODID, path)
+    fun mc(path: String): Identifier = Identifier(path)
     fun getId(item: Item): Identifier = Registries.ITEM.getId(item)
     fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
 
@@ -31,6 +33,7 @@ object VoidedUtils {
         VUBlocks.init()
         VUITabs.init()
         Keybinds.init()
+        Injections.init()
     }
 
     fun clientInit() {

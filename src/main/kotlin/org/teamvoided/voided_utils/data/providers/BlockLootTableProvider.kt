@@ -14,6 +14,7 @@ class BlockLootTableProvider(output: FabricDataOutput) : FabricBlockLootTablePro
             addDrop(VUBlocks.CHARRED_HANGING_SIGN) { VUItems.CHARRED_HANGING_SIGN }
             add(VUBlocks.CHARRED_DOOR) { doorDrops(it) }
             add(VUBlocks.IRON_COATED_DOOR) { doorDrops(it) }
+
             BLOCK_ITEM_LIST.forEach { if (it !is DoorBlock) addDrop(it) }
         } catch (_: Exception) {
         }

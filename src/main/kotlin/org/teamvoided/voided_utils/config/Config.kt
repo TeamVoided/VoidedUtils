@@ -18,8 +18,14 @@ object Config {
         1,
         enableRedstoneLantern = true,
         enableCharredWoodSet = true,
+        enableIronCoatedBlocks = true,
+        enableCakeDrops = true,
+        enableBarterUpgrades = true,
         enableToggleButtons = true,
-        enableIronCoatedBlocks = true
+        enableShearsMineableTag = true,
+        enableGlowBerriesGlow = true,
+        enableConsistentBlocks = true,
+        enableX = true
     )
     private val configFile: File = FabricLoader.getInstance().configDir.resolve("$MODID.json").toFile()
 
@@ -47,6 +53,12 @@ data class ConfigData(
     val version: Int,
     val enableRedstoneLantern: Boolean,
     val enableCharredWoodSet: Boolean,
+    val enableIronCoatedBlocks: Boolean,
+    val enableCakeDrops: Boolean,
+    val enableBarterUpgrades: Boolean,
     val enableToggleButtons: Boolean,
-    val enableIronCoatedBlocks: Boolean
+    val enableShearsMineableTag: Boolean,
+    val enableGlowBerriesGlow: Boolean,
+    val enableConsistentBlocks: Boolean,
+    val enableX: Boolean
 )
