@@ -14,7 +14,7 @@ import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import org.teamvoided.voided_utils.VoidedUtils.getId
-import org.teamvoided.voided_utils.blocks.AbstractToggleableButtonBlock
+import org.teamvoided.voided_utils.data.tags.VUItemTags
 import org.teamvoided.voided_utils.registries.VUBlocks
 import org.teamvoided.voided_utils.registries.VUItems
 import java.util.function.Consumer
@@ -55,7 +55,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
         genWoodSet(
             c, WoodTypes(
                 VUBlocks.CHARRED_PLANKS,
-                ItemTagProvider.CHARRED_LOGS,
+                VUItemTags.CHARRED_LOGS,
                 VUBlocks.CHARRED_LOG,
                 VUBlocks.CHARRED_WOOD,
                 VUBlocks.STRIPPED_CHARRED_LOG,
@@ -68,12 +68,12 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
 
 
         VUBlocks.TOGGLEABLE_BUTTONS.forEach {
-            val base = (it as AbstractToggleableButtonBlock).buttonBlock.asItem()
+            val base = it.btn.asItem()
 
-            LOGGER.info(base.toString())
             ShapelessRecipeJsonFactory.create(RecipeCategory.REDSTONE, it)
                 .ingredient(base)
                 .ingredient(Items.LEVER)
+                .group("toggleable_buttons")
                 .criterion(hasItem(base), conditionsFromItem(base))
                 .criterion(hasItem(Items.LEVER), conditionsFromItem(Items.LEVER))
                 .criterion(hasItem(it), conditionsFromItem(it))

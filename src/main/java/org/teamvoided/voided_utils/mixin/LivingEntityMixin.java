@@ -19,9 +19,9 @@ public class LivingEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "applyFoodEffects")
     private void applyFoodEffects(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo ci) {
-        if (INSTANCE.getId(stack.getItem()) == INSTANCE.getId(Items.GLOW_BERRIES)) {
+        if (INSTANCE.getConfig().getEnableGlowBerriesGlow() &&
+                INSTANCE.getId(stack.getItem()) == INSTANCE.getId(Items.GLOW_BERRIES)) {
             targetEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 120, 0));
         }
     }
-
 }

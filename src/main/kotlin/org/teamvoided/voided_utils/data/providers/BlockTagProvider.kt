@@ -2,13 +2,10 @@ package org.teamvoided.voided_utils.data.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.TagKey
-import org.teamvoided.voided_utils.VoidedUtils.id
+import org.teamvoided.voided_utils.data.tags.VUBlockTags
 import org.teamvoided.voided_utils.registries.VUBlocks
 import java.util.concurrent.CompletableFuture
 
@@ -57,7 +54,7 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
             .add(VUBlocks.IRON_COATED_TRAPDOOR)
 
         getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN)
-            .addTag(CHARRED_LOGS)
+            .addTag(VUBlockTags.CHARRED_LOGS)
 
         getOrCreateTagBuilder(BlockTags.STANDING_SIGNS)
             .add(VUBlocks.CHARRED_SIGN)
@@ -80,35 +77,26 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
         VUBlocks.TOGGLEABLE_BUTTONS.forEach {
             getOrCreateTagBuilder(BlockTags.BUTTONS)
                 .add(it)
-            getOrCreateTagBuilder(TOGGLEABLE_BUTTONS)
+            getOrCreateTagBuilder(VUBlockTags.TOGGLEABLE_BUTTONS)
                 .add(it)
         }
 
 
 
 
-        getOrCreateTagBuilder(CHARRED_LOGS)
+        getOrCreateTagBuilder(VUBlockTags.CHARRED_LOGS)
             .add(VUBlocks.CHARRED_LOG)
             .add(VUBlocks.STRIPPED_CHARRED_LOG)
             .add(VUBlocks.CHARRED_WOOD)
             .add(VUBlocks.STRIPPED_CHARRED_WOOD)
 
-        getOrCreateTagBuilder(SHEARS_MINEABLE_FAST)
+        getOrCreateTagBuilder(VUBlockTags.SHEARS_MINEABLE_FAST)
             .add(Blocks.COBWEB)
             .forceAddTag(BlockTags.LEAVES)
 
-        getOrCreateTagBuilder(SHEARS_MINEABLE_SLOW)
+        getOrCreateTagBuilder(VUBlockTags.SHEARS_MINEABLE_SLOW)
             .forceAddTag(BlockTags.WOOL)
-
     }
-
     companion object{
-        val CHARRED_LOGS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("charred_logs"))
-        val TOGGLEABLE_BUTTONS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("toggleable_buttons"))
-        @JvmField
-        val SHEARS_MINEABLE_FAST: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("mineable/shears/fast"))
-        @JvmField
-        val SHEARS_MINEABLE_SLOW: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("mineable/shears/slow"))
-
     }
 }

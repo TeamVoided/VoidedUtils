@@ -12,8 +12,8 @@ import net.minecraft.data.client.model.Texture
 import net.minecraft.item.Item
 import net.minecraft.util.Identifier
 import org.teamvoided.voided_utils.VoidedUtils.getId
+import org.teamvoided.voided_utils.VoidedUtils.id
 import org.teamvoided.voided_utils.VoidedUtils.mc
-import org.teamvoided.voided_utils.blocks.AbstractToggleableButtonBlock
 import org.teamvoided.voided_utils.registries.VUBlocks
 
 class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
@@ -35,11 +35,7 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
             )
             registerTrapdoor(VUBlocks.IRON_COATED_TRAPDOOR, mc("block/iron_trapdoor"), gen)
             registerDoor(VUBlocks.IRON_COATED_DOOR, Blocks.IRON_DOOR, mc("item/iron_door"), gen)
-            VUBlocks.TOGGLEABLE_BUTTONS.forEach { block ->
-                val base = getId((block as AbstractToggleableButtonBlock).buttonBlock).path.removeSuffix("_button")
-                LOGGER.info(base)
-                button(block, mc("block/$base"), gen)
-            }
+            VUBlocks.TOGGLEABLE_BUTTONS.forEach { block -> toggleBtn(block, getId(block.btn), gen) }
         } catch (_: Exception) {
         }
 
@@ -73,13 +69,13 @@ class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
         )
     }
 
-    private fun button(buttonBlock: Block, customTexture: Identifier, gen: BlockStateModelGenerator) {
-        val texture = Texture.texture(customTexture)
-        val id = Models.BUTTON.upload(buttonBlock, texture, gen.modelCollector)
-        val id2 = Models.BUTTON_PRESSED.upload(buttonBlock, texture, gen.modelCollector)
-        gen.blockStateCollector.accept(BlockStateModelGenerator.createButtonBlockState(buttonBlock, id, id2))
-        val id3 = Models.BUTTON_INVENTORY.upload(buttonBlock, texture, gen.modelCollector)
-        gen.registerParentedItemModel(buttonBlock, id3)
+    private fun toggleBtn(btn: Block, p: Identifier, gen: BlockStateModelGenerator) {
+        gen.blockStateCollector.accept(
+            BlockStateModelGenerator.createButtonBlockState(
+                btn, id(p.namespace,"block/${p.path}"), id(p.namespace,"block/${p.path}_pressed")
+            )
+        )
+        gen.registerParentedItemModel(btn, id(p.namespace,"block/${p.path}_inventory"))
     }
 
     private fun registerItemModel(item: Item, customTexture: Identifier, gen: BlockStateModelGenerator) {

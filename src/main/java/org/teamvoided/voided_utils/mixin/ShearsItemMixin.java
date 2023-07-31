@@ -9,8 +9,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.voided_utils.VoidedUtils;
-import org.teamvoided.voided_utils.data.providers.BlockTagProvider;
+import org.teamvoided.voided_utils.data.tags.VUBlockTags;
+
+import static org.teamvoided.voided_utils.VoidedUtils.INSTANCE;
 
 @Mixin(ShearsItem.class)
 public class ShearsItemMixin extends Item {
@@ -21,14 +22,15 @@ public class ShearsItemMixin extends Item {
 
     @Inject(at = @At("HEAD"), method = "getMiningSpeedMultiplier", cancellable = true)
     public void getMiningSpeedMultiplier(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> cir) {
-        VoidedUtils.INSTANCE.getLOGGER().info("SHear");
-        if (state.isIn(BlockTagProvider.SHEARS_MINEABLE_FAST)) {
-            cir.setReturnValue(15.0F);
-        } else if (state.isIn(BlockTagProvider.SHEARS_MINEABLE_SLOW)) {
-            cir.setReturnValue(5.0F);
-        } else {
-            cir.setReturnValue(!state.isOf(Blocks.VINE) && !state.isOf(Blocks.GLOW_LICHEN) ?
-                    super.getMiningSpeedMultiplier(stack, state) : 2.0F);
+        if (INSTANCE.getConfig().getEnableShearsMineableTag()) {
+            if (state.isIn(VUBlockTags.SHEARS_MINEABLE_FAST)) {
+                cir.setReturnValue(15.0F);
+            } else if (state.isIn(VUBlockTags.SHEARS_MINEABLE_SLOW)) {
+                cir.setReturnValue(5.0F);
+            } else {
+                cir.setReturnValue(!state.isOf(Blocks.VINE) && !state.isOf(Blocks.GLOW_LICHEN) ?
+                        super.getMiningSpeedMultiplier(stack, state) : 2.0F);
+            }
         }
     }
 }

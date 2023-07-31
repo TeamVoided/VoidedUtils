@@ -4,7 +4,9 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.AbstractButtonBlock
 import net.minecraft.block.BlockSetType
 import net.minecraft.block.BlockState
+import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
@@ -14,45 +16,46 @@ import net.minecraft.world.event.GameEvent
 
 @Suppress("OVERRIDE_DEPRECATION")
 class AbstractToggleableButtonBlock(
-    val buttonBlock: AbstractButtonBlock, blockSetType: BlockSetType, activatedByProjectile: Boolean,
+    val btn: AbstractButtonBlock, blockSetType: BlockSetType, private val activatedByProjectile: Boolean,
 ) :
-    AbstractButtonBlock(FabricBlockSettings.copyOf(buttonBlock), blockSetType, 0, activatedByProjectile) {
+    AbstractButtonBlock(FabricBlockSettings.copyOf(btn), blockSetType, 0, activatedByProjectile) {
 
 
     override fun onUse(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity,
-        hand: Hand,
-        hit: BlockHitResult,
-    ): ActionResult? {
-        return if (state.get(POWERED)) {
-            ActionResult.CONSUME
-        } else {
-            if (state.get(POWERED)) {
-                powerOn(state, world, pos, false)
-                playClickSound(player, world, pos, false)
-                world.emitGameEvent(player, GameEvent.BLOCK_DEACTIVATE, pos)
-                ActionResult.success(world.isClient)
-            } else {
-                powerOn(state, world, pos, true)
-                playClickSound(player, world, pos, true)
-                world.emitGameEvent(player, GameEvent.BLOCK_ACTIVATE, pos)
-                ActionResult.success(world.isClient)
-            }
-        }
+        state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockHitResult,
+    ): ActionResult {
+        togglePow(state, world, pos, !state.get(POWERED), player)
+        return ActionResult.success(world.isClient)
     }
 
 
-    fun powerOn(state: BlockState, world: World, pos: BlockPos, value: Boolean) {
+    private fun togglePow(state: BlockState, world: World, pos: BlockPos, value: Boolean, entity: Entity) {
         world.setBlockState(pos, state.with(POWERED, value) as BlockState, 3)
         updateNeighbors(state, world, pos)
+        playClickSound(null, world, pos, value)
+        world.emitGameEvent(
+            entity,
+            if (value) GameEvent.BLOCK_ACTIVATE else GameEvent.BLOCK_DEACTIVATE,
+            pos
+        )
     }
 
     private fun updateNeighbors(state: BlockState, world: World, pos: BlockPos) {
         world.updateNeighborsAlways(pos, this)
         world.updateNeighborsAlways(pos.offset(getDirection(state).opposite), this)
+    }
+
+    override fun tryPowerWithProjectiles(state: BlockState, world: World, pos: BlockPos) {
+        if (activatedByProjectile) {
+            val pProjectileEntity: PersistentProjectileEntity? =
+                world.getNonSpectatingEntities(
+                    PersistentProjectileEntity::class.java, state.getOutlineShape(world, pos).boundingBox.offset(pos)
+                )
+                    .stream()
+                    .findFirst()
+                    .orElse(null)
+            if (pProjectileEntity != null) togglePow(state, world, pos, state.get(POWERED), pProjectileEntity)
+        }
     }
 
 
