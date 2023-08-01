@@ -24,7 +24,8 @@ object Config {
         enableToggleButtons = true,
         enableShearsMineableTag = true,
         enableGlowBerriesGlow = true,
-        enableConsistentBlocks = true,
+        enableConsistentStones = true,
+        enableMossTag = true,
         enableX = true
     )
     private val configFile: File = FabricLoader.getInstance().configDir.resolve("$MODID.json").toFile()
@@ -59,6 +60,7 @@ data class ConfigData(
     val enableToggleButtons: Boolean,
     val enableShearsMineableTag: Boolean,
     val enableGlowBerriesGlow: Boolean,
-    val enableConsistentBlocks: Boolean,
+    val enableConsistentStones: Boolean,
+    val enableMossTag: Boolean,
     val enableX: Boolean
 )

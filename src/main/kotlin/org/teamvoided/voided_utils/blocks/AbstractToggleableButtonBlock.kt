@@ -13,12 +13,13 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
+import org.teamvoided.voided_utils.blocks.voided.VoidedButtonBlock
 
 @Suppress("OVERRIDE_DEPRECATION")
 class AbstractToggleableButtonBlock(
     val btn: AbstractButtonBlock, blockSetType: BlockSetType, private val activatedByProjectile: Boolean,
 ) :
-    AbstractButtonBlock(FabricBlockSettings.copyOf(btn), blockSetType, 0, activatedByProjectile) {
+    VoidedButtonBlock(btn, FabricBlockSettings.copyOf(btn), blockSetType, 0, activatedByProjectile) {
 
 
     override fun onUse(

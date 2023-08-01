@@ -27,6 +27,7 @@ import org.teamvoided.voided_utils.VoidedUtils.id
 import org.teamvoided.voided_utils.blocks.AbstractToggleableButtonBlock
 import org.teamvoided.voided_utils.blocks.RedstoneLanternBlock
 import org.teamvoided.voided_utils.registries.VUItems.ALL_ITEM_LIST
+import org.teamvoided.voided_utils.registries.modules.ConsistentStones
 import java.util.*
 
 
@@ -35,14 +36,15 @@ object VUBlocks {
 
     val BLOCK_LIST = LinkedList<Block>()
     val BLOCK_ITEM_LIST = LinkedList<Block>()
+    val FULL_SQUARE_LIST = LinkedList<Block>()
     val TOGGLEABLE_BUTTONS = LinkedList<AbstractToggleableButtonBlock>()
 
 
-    private val CHARRED_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.registerWood(id("charred"))
-    private val CHARRED_WOOD_TYPE: SignType = WoodTypeRegistry.register(id("charred"), CHARRED_BLOCK_SET_TYPE)
+    val CHARRED_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.registerWood(id("charred"))
+    val CHARRED_WOOD_TYPE: SignType = WoodTypeRegistry.register(id("charred"), CHARRED_BLOCK_SET_TYPE)
 
 
-    private val IRON_LIKE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.register(
+    val IRON_LIKE_BLOCK_SET_TYPE: BlockSetType = BlockSetTypeRegistry.register(
         id("iron"), true,
         BlockSoundGroup.METAL,
         SoundEvents.BLOCK_IRON_DOOR_CLOSE,
@@ -58,7 +60,7 @@ object VUBlocks {
     val CHARRED_SIGN_ID = id("entity/signs/charred")
     val CHARRED_HANGING_SIGN_ID = id("entity/signs/hanging/charred")
 
-    private val charredLike: AbstractBlock.Settings = FabricBlockSettings.create()
+    val charredLike: AbstractBlock.Settings = FabricBlockSettings.create()
         .mapColor(MapColor.STONE)
         .instrument(NoteBlockInstrument.BASS)
         .strength(2.0f)
@@ -149,7 +151,6 @@ object VUBlocks {
         val c = VoidedUtils.getConfig()
 
         if (c.enableRedstoneLantern) registerWithItem("redstone_lantern", REDSTONE_LANTERN)
-
         if (c.enableCharredWoodSet) {
             registerWithItem("charred_log", CHARRED_LOG)
             registerWithItem("stripped_charred_log", STRIPPED_CHARRED_LOG)
@@ -191,31 +192,38 @@ object VUBlocks {
             registerToggleBtn("toggleable_warped_button", TOGGLEABLE_WARPED_BUTTON)
             if (c.enableCharredWoodSet) registerToggleBtn("toggleable_charred_button", TOGGLEABLE_CHARRED_BUTTON)
         }
+        if (c.enableConsistentStones) ConsistentStones.init()
     }
 
     val CUTOUT_LIST: List<Block> =
         listOf(CHARRED_DOOR, CHARRED_TRAPDOOR, REDSTONE_LANTERN, IRON_COATED_TRAPDOOR, IRON_COATED_DOOR)
 
 
-    private fun registerWithItem(id: String, block: Block): Block {
+    fun regFullSquare(id: String, block: Block): Block {
+        FULL_SQUARE_LIST.add(block)
+        return registerWithItem(id, block)
+    }
+
+
+    fun registerWithItem(id: String, block: Block): Block {
         val item = Registry.register(Registries.ITEM, id(id), BlockItem(block, FabricItemSettings()))
         ALL_ITEM_LIST.add(item)
         BLOCK_ITEM_LIST.add(block)
         return register(id, block)
     }
 
-    private fun registerToggleBtn(id: String, block: AbstractToggleableButtonBlock): Block {
+    fun registerToggleBtn(id: String, block: AbstractToggleableButtonBlock): Block {
         TOGGLEABLE_BUTTONS.add(block)
         return registerWithItem(id, block)
     }
 
-    private fun register(id: String, block: Block): Block {
+    fun register(id: String, block: Block): Block {
         val regBlock = Registry.register(Registries.BLOCK, id(id), block)
         BLOCK_LIST.add(regBlock)
         return regBlock
     }
 
-    private fun createPillarBlock(topColor: MapColor, sideColor: MapColor): PillarBlock {
+    fun createPillarBlock(topColor: MapColor, sideColor: MapColor): PillarBlock {
         return PillarBlock(
             AbstractBlock.Settings.create()
                 .mapColor { state: BlockState ->
@@ -231,17 +239,17 @@ object VUBlocks {
         )
     }
 
-    private fun createBtn(blockSetType: BlockSetType): AbstractButtonBlock = AbstractButtonBlock(
+    fun createBtn(blockSetType: BlockSetType): AbstractButtonBlock = AbstractButtonBlock(
         AbstractBlock.Settings.create().noCollision().strength(0.5f).pistonBehavior(PistonBehavior.DESTROY),
         blockSetType,
         30,
         true
     )
 
-    private fun createToggleBtn(button: Block, blockSetType: BlockSetType): AbstractToggleableButtonBlock =
+    fun createToggleBtn(button: Block, blockSetType: BlockSetType): AbstractToggleableButtonBlock =
         AbstractToggleableButtonBlock(button as AbstractButtonBlock, blockSetType, true)
 
-    private fun createToggleStoneBtn(button: Block): AbstractToggleableButtonBlock =
+    fun createToggleStoneBtn(button: Block): AbstractToggleableButtonBlock =
         AbstractToggleableButtonBlock(button as AbstractButtonBlock, BlockSetType.STONE, false)
 
 
