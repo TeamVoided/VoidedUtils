@@ -16,6 +16,7 @@ import org.teamvoided.voided_utils.config.ConfigData
 import org.teamvoided.voided_utils.misc.Injections
 import org.teamvoided.voided_utils.misc.Keybinds
 import org.teamvoided.voided_utils.registries.*
+import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 
 @Suppress("unused")
 object VoidedUtils {
@@ -42,8 +43,8 @@ object VoidedUtils {
 
         val c = getConfig()
         if (c.enableCharredWoodSet) {
-            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_SIGN_ID))
-            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, VUBlocks.CHARRED_HANGING_SIGN_ID))
+            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, CharredWoodSet.CHARRED_SIGN_ID))
+            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, CharredWoodSet.CHARRED_HANGING_SIGN_ID))
         }
     }
 

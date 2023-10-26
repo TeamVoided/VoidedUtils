@@ -21,6 +21,7 @@ import org.teamvoided.voided_utils.VoidedUtils.getId
 import org.teamvoided.voided_utils.data.tags.VUItemTags
 import org.teamvoided.voided_utils.registries.VUBlocks
 import org.teamvoided.voided_utils.registries.VUItems
+import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 import org.teamvoided.voided_utils.registries.modules.ConsistentStones
 import java.util.function.Consumer
 
@@ -61,15 +62,15 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
 
             genWoodSet(
                 c, WoodTypes(
-                    VUBlocks.CHARRED_PLANKS,
+                    CharredWoodSet.CHARRED_PLANKS,
                     VUItemTags.CHARRED_LOGS,
-                    VUBlocks.CHARRED_LOG,
-                    VUBlocks.CHARRED_WOOD,
-                    VUBlocks.STRIPPED_CHARRED_LOG,
-                    VUBlocks.STRIPPED_CHARRED_WOOD,
+                    CharredWoodSet.CHARRED_LOG,
+                    CharredWoodSet.CHARRED_WOOD,
+                    CharredWoodSet.STRIPPED_CHARRED_LOG,
+                    CharredWoodSet.STRIPPED_CHARRED_WOOD,
                     VUItems.CHARRED_SIGN,
                     VUItems.CHARRED_HANGING_SIGN,
-                    VUBlocks.CHARRED_FAMILY
+                    CharredWoodSet.CHARRED_FAMILY
                 )
             )
 

@@ -14,21 +14,22 @@ import org.teamvoided.voided_utils.VoidedUtils.id
 import org.teamvoided.voided_utils.VoidedUtils.mc
 import org.teamvoided.voided_utils.blocks.voided.*
 import org.teamvoided.voided_utils.registries.VUBlocks
+import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 import org.teamvoided.voided_utils.registries.modules.ConsistentStones
 
 class ModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     private val logs = listOf(
-        Log(VUBlocks.CHARRED_LOG, VUBlocks.CHARRED_WOOD),
-        Log(VUBlocks.STRIPPED_CHARRED_LOG, VUBlocks.STRIPPED_CHARRED_WOOD)
+        Log(CharredWoodSet.CHARRED_LOG, CharredWoodSet.CHARRED_WOOD),
+        Log(CharredWoodSet.STRIPPED_CHARRED_LOG, CharredWoodSet.STRIPPED_CHARRED_WOOD)
     )
 
     override fun generateBlockStateModels(gen: BlockStateModelGenerator) {
         try {
             logs.forEach { gen.registerLog(it.log).log(it.log).wood(it.wood) }
 
-            gen.registerCubeAllModelTexturePool(VUBlocks.CHARRED_PLANKS).family(VUBlocks.CHARRED_FAMILY)
+            gen.registerCubeAllModelTexturePool(CharredWoodSet.CHARRED_PLANKS).family(CharredWoodSet.CHARRED_FAMILY)
             gen.method_46190(
-                VUBlocks.STRIPPED_CHARRED_LOG, VUBlocks.CHARRED_HANGING_SIGN, VUBlocks.CHARRED_WALL_HANGING_SIGN
+                CharredWoodSet.STRIPPED_CHARRED_LOG, CharredWoodSet.CHARRED_HANGING_SIGN, CharredWoodSet.CHARRED_WALL_HANGING_SIGN
             )
 
             registerTrapdoor(VUBlocks.IRON_COATED_TRAPDOOR, mc("block/iron_trapdoor"), gen)

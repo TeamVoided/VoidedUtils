@@ -15,10 +15,8 @@ import static org.teamvoided.voided_utils.VoidedUtils.INSTANCE;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-
-
     @Inject(at = @At("HEAD"), method = "applyFoodEffects")
-    private void applyFoodEffects(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo ci) {
+    private void voidedUtils$applyFoodEffects(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo ci) {
         if (INSTANCE.getConfig().getEnableGlowBerriesGlow() &&
                 INSTANCE.getId(stack.getItem()) == INSTANCE.getId(Items.GLOW_BERRIES)) {
             targetEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 120, 0));

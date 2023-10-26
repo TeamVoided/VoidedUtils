@@ -6,6 +6,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import org.teamvoided.voided_utils.VoidedUtils.getConfig
 import org.teamvoided.voided_utils.VoidedUtils.id
+import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 import java.util.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -16,9 +17,9 @@ object VUItems {
 
     private val settings: FabricItemSettings = FabricItemSettings().maxCount(64)
 
-    val CHARRED_SIGN: Item = SignItem(Item.Settings().maxCount(16), VUBlocks.CHARRED_SIGN, VUBlocks.CHARRED_WALL_SIGN)
+    val CHARRED_SIGN: Item = SignItem(Item.Settings().maxCount(16), CharredWoodSet.CHARRED_SIGN, CharredWoodSet.CHARRED_WALL_SIGN)
     val CHARRED_HANGING_SIGN: Item =
-        HangingSignItem(VUBlocks.CHARRED_HANGING_SIGN, VUBlocks.CHARRED_WALL_HANGING_SIGN, Item.Settings().maxCount(16))
+        HangingSignItem(CharredWoodSet.CHARRED_HANGING_SIGN, CharredWoodSet.CHARRED_WALL_HANGING_SIGN, Item.Settings().maxCount(16))
 
     fun init() {
         val c = getConfig()

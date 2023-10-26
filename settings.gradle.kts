@@ -7,8 +7,6 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.teamvoided.org/releases")
     }
-
-
 }
 
 rootProject.name = "VoidedUtils"

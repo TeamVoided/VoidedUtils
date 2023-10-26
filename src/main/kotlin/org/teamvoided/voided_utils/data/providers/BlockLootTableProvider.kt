@@ -8,14 +8,15 @@ import org.teamvoided.voided_utils.VoidedUtils
 import org.teamvoided.voided_utils.registries.VUBlocks
 import org.teamvoided.voided_utils.registries.VUBlocks.BLOCK_ITEM_LIST
 import org.teamvoided.voided_utils.registries.VUItems
+import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 import org.teamvoided.voided_utils.registries.modules.ConsistentStones
 
 class BlockLootTableProvider(output: FabricDataOutput) : FabricBlockLootTableProvider(output) {
     override fun generate() {
         try {
-            addDrop(VUBlocks.CHARRED_SIGN) { VUItems.CHARRED_SIGN }
-            addDrop(VUBlocks.CHARRED_HANGING_SIGN) { VUItems.CHARRED_HANGING_SIGN }
-            add(VUBlocks.CHARRED_DOOR) { doorDrops(it) }
+            addDrop(CharredWoodSet.CHARRED_SIGN) { VUItems.CHARRED_SIGN }
+            addDrop(CharredWoodSet.CHARRED_HANGING_SIGN) { VUItems.CHARRED_HANGING_SIGN }
+            add(CharredWoodSet.CHARRED_DOOR) { doorDrops(it) }
             add(VUBlocks.IRON_COATED_DOOR) { doorDrops(it) }
 
             ConsistentStones.INFESTED_LIST.forEach { addDropWithSilkTouch(it, it.regularBlock) }

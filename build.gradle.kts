@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.0"
-    kotlin("plugin.serialization") version "1.9.0"
-    id("org.teamvoided.iridium") version "2.2.3"
-    id("iridium.mod.build-script") version "2.2.3"
+    id("fabric-loom") version "1.3.8"
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.10"
+    id("org.teamvoided.iridium") version "3.0.2"
 }
 
 group = project.properties["maven_group"]!!
@@ -35,7 +35,6 @@ modSettings {
     entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtilsData")
     mixinFile("voided_utils.mixins.json")
 
-    isModParent(true)
 }
 
 

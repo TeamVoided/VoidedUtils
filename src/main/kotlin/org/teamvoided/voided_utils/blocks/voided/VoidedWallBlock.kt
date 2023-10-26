@@ -4,4 +4,6 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.WallBlock
 
-class VoidedWallBlock(val block: Block) : WallBlock( FabricBlockSettings.copyOf(block))
+open class VoidedWallBlock(val block: Block, settings: FabricBlockSettings) : WallBlock(settings) {
+    constructor(block: Block) : this(block, FabricBlockSettings.copyOf(block))
+}

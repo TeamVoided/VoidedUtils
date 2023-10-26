@@ -8,6 +8,7 @@ import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.sound.BlockSoundGroup
 import org.teamvoided.voided_utils.VoidedUtils.getConfig
 import org.teamvoided.voided_utils.blocks.AbstractToggleableButtonBlock
+import org.teamvoided.voided_utils.blocks.ObsidianWallBlock
 import org.teamvoided.voided_utils.blocks.voided.*
 import org.teamvoided.voided_utils.registries.VUBlocks
 import org.teamvoided.voided_utils.registries.VUBlocks.regFullSquare
@@ -62,7 +63,10 @@ object ConsistentStones {
     val END_STONE_STAIR = VoidedStairBlock(Blocks.END_STONE)
     val QUARTZ_BRICKS_STAIR = VoidedStairBlock(Blocks.QUARTZ_BRICKS)
     val SNOW_STAIR = VoidedStairBlock(Blocks.SNOW_BLOCK)
-    val OBSIDIAN_STAIR = VoidedStairBlock(Blocks.OBSIDIAN)
+    val OBSIDIAN_STAIR = VoidedStairBlock(
+        Blocks.OBSIDIAN,
+        FabricBlockSettings.copyOf(Blocks.OBSIDIAN).pistonBehavior(PistonBehavior.BLOCK)
+    )
 
     val CRACKED_STONE_BRICKS_SLAB = VoidedSlabBlock(Blocks.CRACKED_STONE_BRICKS)
     val CRACKED_DEEPSLATE_BRICKS_SLAB = VoidedSlabBlock(Blocks.CRACKED_DEEPSLATE_BRICKS)
@@ -78,7 +82,10 @@ object ConsistentStones {
     val CRACKED_POLISHED_BLACKSTONE_BRICKS_SLAB = VoidedSlabBlock(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
     val END_STONE_SLAB = VoidedSlabBlock(Blocks.END_STONE)
     val QUARTZ_BRICKS_SLAB = VoidedSlabBlock(Blocks.QUARTZ_BRICKS)
-    val OBSIDIAN_SLAB = VoidedSlabBlock(Blocks.OBSIDIAN)
+    val OBSIDIAN_SLAB = VoidedSlabBlock(
+        Blocks.OBSIDIAN,
+        FabricBlockSettings.copyOf(Blocks.OBSIDIAN).pistonBehavior(PistonBehavior.BLOCK)
+    )
 
     val SMOOTH_STONE_WALL = VoidedWallBlock(Blocks.SMOOTH_STONE)
     val STONE_WALL = VoidedWallBlock(Blocks.STONE)
@@ -109,7 +116,7 @@ object ConsistentStones {
     val QUARTZ_BRICKS_WALL = VoidedWallBlock(Blocks.QUARTZ_BRICKS)
     val SMOOTH_QUARTZ_WALL = VoidedWallBlock(Blocks.SMOOTH_QUARTZ)
     val SNOW_WALL = VoidedWallBlock(Blocks.SNOW_BLOCK)
-    val OBSIDIAN_WALL = VoidedWallBlock(Blocks.OBSIDIAN)
+    val OBSIDIAN_WALL = ObsidianWallBlock()
 
 
     val SMOOTH_STONE_BUTTON = createStoneBtn(Blocks.SMOOTH_STONE)
@@ -136,6 +143,8 @@ object ConsistentStones {
 
 
     fun init() {
+        if (!getConfig().enableConsistentStones) return
+
         regFullSquare("cracked_red_nether_bricks", CRACKED_RED_NETHER_BRICKS)
 
         regInfested("infested_mossy_cobblestone", INFESTED_MOSSY_COBBLESTONE)
