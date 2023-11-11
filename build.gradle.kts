@@ -14,16 +14,13 @@ description = "Many QoL features\nMany Util features"
 
 repositories {
     mavenCentral()
-    maven {
+    maven("https://maven.terraformersmc.com/") {
         name = "TerraformersMC"
-        url = uri("https://maven.terraformersmc.com/")
     }
-}
+    maven("https://maven.teamvoided.org/releases") {
+        name = "brokenfuseReleases"
+    }
 
-dependencies {
-    modImplementation("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")?.let { include(it) }
-    annotationProcessor("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")
-    modImplementation(files("scuffedlib-1.0.0+1.20.1.jar"))
 }
 
 modSettings {
@@ -34,6 +31,19 @@ modSettings {
     entrypoint("client", "org.teamvoided.voided_utils.VoidedUtils::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtilsData")
     mixinFile("voided_utils.mixins.json")
+
+}
+
+dependencies {
+    modImplementation("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")?.let {
+        include(
+            it
+        )
+    }
+    annotationProcessor("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")
+    modImplementation(files("scuffedlib-1.0.0+1.20.1.jar"))
+
+    modImplementation("org.teamvoided:voidlib-core:1.5.8+1.20.1")
 
 }
 

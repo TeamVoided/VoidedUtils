@@ -24,10 +24,6 @@ object VoidedUtils {
     val LOGGER: Logger = LoggerFactory.getLogger(VoidedUtils::class.java)
     fun id(path: String): Identifier = Identifier(MODID, path)
     fun id(namespace: String, path: String): Identifier = Identifier(namespace, path)
-    fun mc(path: String): Identifier = Identifier(path)
-    fun getId(item: Item): Identifier = Registries.ITEM.getId(item)
-    fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
-
     fun commonInit() {
         Config.load()
         LOGGER.info("Utilizing your eRam and qRam")

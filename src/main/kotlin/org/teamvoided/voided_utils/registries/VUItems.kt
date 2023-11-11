@@ -15,7 +15,6 @@ object VUItems {
     val ITEM_LIST = LinkedList<Item>()
     val ALL_ITEM_LIST = LinkedList<Item>()
 
-    private val settings: FabricItemSettings = FabricItemSettings().maxCount(64)
 
     val CHARRED_SIGN: Item = SignItem(Item.Settings().maxCount(16), CharredWoodSet.CHARRED_SIGN, CharredWoodSet.CHARRED_WALL_SIGN)
     val CHARRED_HANGING_SIGN: Item =
