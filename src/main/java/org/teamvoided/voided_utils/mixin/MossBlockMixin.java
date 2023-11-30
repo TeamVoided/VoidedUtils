@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.teamvoided.voided_utils.registries.VUWorldGen;
 
 
+import static org.teamvoided.voided_utils.VoidedUtils.INSTANCE;
 import static org.teamvoided.voided_utils.data.tags.VUBlockTags.AIR_PASSABLE;
 
 @Mixin(MossBlock.class)
@@ -30,7 +31,7 @@ public class MossBlockMixin {
 
     @Inject(method = "fertilize", at = @At("HEAD"), cancellable = true)
     public void voidUtils$fertilize(ServerWorld world, RandomGenerator random, BlockPos pos, BlockState state, CallbackInfo ci) {
-        if (true) {
+        if (INSTANCE.getConfig().getEnableMossTag()) {
             world.getRegistryManager()
                     .getOptional(RegistryKeys.CONFIGURED_FEATURE)
                     .flatMap(registry ->
