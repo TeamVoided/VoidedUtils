@@ -17,12 +17,12 @@ import net.minecraft.recipe.RecipeCategory
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import org.teamvoided.voided_utils.VoidedUtils
-import org.teamvoided.voided_utils.VoidedUtils.getId
 import org.teamvoided.voided_utils.data.tags.VUItemTags
 import org.teamvoided.voided_utils.registries.VUBlocks
 import org.teamvoided.voided_utils.registries.VUItems
 import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 import org.teamvoided.voided_utils.registries.modules.ConsistentStones
+import org.teamvoided.voidlib.core.gId
 import java.util.function.Consumer
 
 class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
@@ -38,7 +38,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
                 .ingredient('$', Blocks.REDSTONE_TORCH)
                 .criterion(hasItem(Items.REDSTONE_TORCH), conditionsFromItem(Items.REDSTONE_TORCH))
                 .criterion(hasItem(VUBlocks.REDSTONE_LANTERN), conditionsFromItem(VUBlocks.REDSTONE_LANTERN))
-                .offerTo(c, getId(VUBlocks.REDSTONE_LANTERN))
+                .offerTo(c, VUBlocks.REDSTONE_LANTERN.gId)
 
             ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, VUBlocks.IRON_COATED_TRAPDOOR)
                 .pattern(" # ")
@@ -48,7 +48,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
                 .ingredient('$', ItemTags.WOODEN_TRAPDOORS)
                 .criterion("has_trapdoor", conditionsFromItemTag(ItemTags.WOODEN_TRAPDOORS))
                 .criterion(hasItem(VUBlocks.IRON_COATED_TRAPDOOR), conditionsFromItem(VUBlocks.IRON_COATED_TRAPDOOR))
-                .offerTo(c, getId(VUBlocks.IRON_COATED_TRAPDOOR))
+                .offerTo(c, VUBlocks.IRON_COATED_TRAPDOOR.gId)
 
             ShapedRecipeJsonFactory.create(RecipeCategory.REDSTONE, VUBlocks.IRON_COATED_DOOR)
                 .pattern(" # ")
@@ -58,7 +58,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
                 .ingredient('$', ItemTags.WOODEN_DOORS)
                 .criterion("has_door", conditionsFromItemTag(ItemTags.WOODEN_DOORS))
                 .criterion(hasItem(VUBlocks.IRON_COATED_DOOR), conditionsFromItem(VUBlocks.IRON_COATED_DOOR))
-                .offerTo(c, getId(VUBlocks.IRON_COATED_DOOR))
+                .offerTo(c, VUBlocks.IRON_COATED_DOOR.gId)
 
             genWoodSet(
                 c, WoodTypes(
@@ -84,7 +84,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
                     .criterion(hasItem(base), conditionsFromItem(base))
                     .criterion(hasItem(Items.LEVER), conditionsFromItem(Items.LEVER))
                     .criterion(hasItem(it), conditionsFromItem(it))
-                    .offerTo(c, getId(it))
+                    .offerTo(c, it.gId)
             }
 
             CookingRecipeJsonFactory.createSmelting(
@@ -120,7 +120,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
                 .ingredient('$', Items.NETHER_BRICK)
                 .criterion(hasItem(Items.NETHER_BRICK), conditionsFromItem(Items.NETHER_BRICK))
                 .criterion(hasItem(Items.RED_NETHER_BRICKS), conditionsFromItem(Items.RED_NETHER_BRICKS))
-                .offerTo(c, getId(ConsistentStones.RED_NETHER_BRICK_FENCE))
+                .offerTo(c, ConsistentStones.RED_NETHER_BRICK_FENCE.gId)
 
         } catch (e: Exception) {
             VoidedUtils.LOGGER.error("Error {}", e.toString())
@@ -148,7 +148,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .group("stairs")
             .criterion(hasItem(inp), conditionsFromItem(inp))
             .criterion(hasItem(out), conditionsFromItem(out))
-            .offerTo(c, getId(out))
+            .offerTo(c, out.gId)
     }
 
     private fun genSlabs(out: Block, inp: ItemConvertible, c: Consumer<RecipeJsonProvider>) {
@@ -156,7 +156,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .group("slabs")
             .criterion(hasItem(inp), conditionsFromItem(inp))
             .criterion(hasItem(out), conditionsFromItem(out))
-            .offerTo(c, getId(out))
+            .offerTo(c, out.gId)
         offerStonecuttingRecipe(c, RecipeCategory.BUILDING_BLOCKS, out, inp, 2)
     }
 
@@ -170,7 +170,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .group("walls")
             .criterion(hasItem(inp), conditionsFromItem(inp))
             .criterion(hasItem(out), conditionsFromItem(out))
-            .offerTo(c, getId(out))
+            .offerTo(c, out.gId)
     }
 
     private fun genBtn(out: Block, inp: ItemConvertible, c: Consumer<RecipeJsonProvider>) {
@@ -178,7 +178,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .group("buttons")
             .criterion(hasItem(inp), conditionsFromItem(inp))
             .criterion(hasItem(out), conditionsFromItem(out))
-            .offerTo(c, getId(out))
+            .offerTo(c, out.gId)
     }
 
     private fun genPlate(out: Block, inp: ItemConvertible, c: Consumer<RecipeJsonProvider>) {
@@ -186,7 +186,7 @@ class RecipeProvider(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .group("pressure_plates")
             .criterion(hasItem(inp), conditionsFromItem(inp))
             .criterion(hasItem(out), conditionsFromItem(out))
-            .offerTo(c, getId(out))
+            .offerTo(c, out.gId)
     }
 
 

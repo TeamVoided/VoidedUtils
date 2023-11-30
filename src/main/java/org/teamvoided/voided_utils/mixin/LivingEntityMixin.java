@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.teamvoided.voidlib.core.MCUtilsKt;
+import org.teamvoided.voidlib.core.VoidLibKt;
 
 import static org.teamvoided.voided_utils.VoidedUtils.INSTANCE;
 
@@ -18,7 +20,7 @@ public class LivingEntityMixin {
     @Inject(at = @At("HEAD"), method = "applyFoodEffects")
     private void voidedUtils$applyFoodEffects(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo ci) {
         if (INSTANCE.getConfig().getEnableGlowBerriesGlow() &&
-                INSTANCE.getId(stack.getItem()) == INSTANCE.getId(Items.GLOW_BERRIES)) {
+                MCUtilsKt.getGId(stack.getItem()) == MCUtilsKt.getGId(Items.GLOW_BERRIES)) {
             targetEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 120, 0));
         }
     }
