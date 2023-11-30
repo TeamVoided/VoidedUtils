@@ -1,12 +1,9 @@
 package org.teamvoided.voided_utils
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.Block
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.resource.Material
-import net.minecraft.item.Item
-import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -30,6 +27,7 @@ object VoidedUtils {
         VUItems.init()
         VUBlocks.init()
         VUITabs.init()
+        VUWorldGen.init()
         Keybinds.init()
         Injections.init()
     }

@@ -2,6 +2,7 @@ package org.teamvoided.voided_utils.data.providers
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags
 import net.minecraft.block.Blocks
 import net.minecraft.registry.HolderLookup
 import net.minecraft.registry.tag.BlockTags
@@ -145,6 +146,76 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
             getOrCreateTagBuilder(VUBlockTags.SHEARS_MINEABLE_FAST)
                 .add(Blocks.COBWEB)
                 .forceAddTag(BlockTags.LEAVES)
+
+
+
+            getOrCreateTagBuilder(VUBlockTags.AIR_PASSABLE)
+                .forceAddTag(BlockTags.REPLACEABLE)
+                .forceAddTag(BlockTags.ALL_SIGNS)
+                .forceAddTag(BlockTags.FLOWER_POTS)
+                .forceAddTag(BlockTags.BANNERS)
+                .add(Blocks.TORCH)
+                .add(Blocks.WALL_TORCH)
+                .add(Blocks.SOUL_TORCH)
+                .add(Blocks.SOUL_WALL_TORCH)
+                .add(Blocks.LANTERN)
+                .add(Blocks.SOUL_LANTERN)
+                .add(Blocks.CHAIN)
+                .forceAddTag(BlockTags.CAMPFIRES)
+                .forceAddTag(BlockTags.CANDLES)
+                .forceAddTag(BlockTags.BUTTONS)
+                .forceAddTag(BlockTags.PRESSURE_PLATES)
+                .add(Blocks.LEVER)
+                .add(Blocks.TRIPWIRE)
+                .add(Blocks.TRIPWIRE_HOOK)
+                .forceAddTag(BlockTags.SAPLINGS)
+                .forceAddTag(BlockTags.WOOL_CARPETS)
+                .add(Blocks.MOSS_CARPET)
+                .forceAddTag(BlockTags.TRAPDOORS)
+                .add(Blocks.RED_MUSHROOM)
+                .add(Blocks.BROWN_MUSHROOM)
+                .forceAddTag(BlockTags.FENCES)
+                .forceAddTag(BlockTags.FENCE_GATES)
+                .add(Blocks.IRON_BARS)
+                .forceAddTag(ConventionalBlockTags.GLASS_PANES)
+                .forceAddTag(ConventionalBlockTags.BUDS)
+                .forceAddTag(ConventionalBlockTags.CLUSTERS)
+                .add(Blocks.REDSTONE_WIRE)
+                .add(Blocks.REDSTONE_TORCH)
+                .add(Blocks.REDSTONE_WALL_TORCH)
+                .forceAddTag(BlockTags.CLIMBABLE)
+                .forceAddTag(BlockTags.LEAVES)
+                .forceAddTag(BlockTags.CORALS)
+                .add(Blocks.LIGHTNING_ROD)
+                .add(Blocks.COBWEB)
+                .add(Blocks.END_ROD)
+                .forceAddTag(BlockTags.WALLS)
+                .add(Blocks.POINTED_DRIPSTONE)
+                .add(Blocks.DECORATED_POT)
+                .forceAddTag(BlockTags.RAILS)
+                .add(Blocks.BELL)
+                .add(Blocks.SEA_PICKLE)
+                .add(Blocks.SPORE_BLOSSOM)
+                .forceAddTag(BlockTags.FLOWERS)
+                .add(Blocks.BAMBOO)
+                .add(Blocks.BAMBOO_SAPLING)
+                .add(Blocks.SUGAR_CANE)
+                .add(Blocks.SWEET_BERRY_BUSH)
+                .add(Blocks.CRIMSON_FUNGUS)
+                .add(Blocks.WARPED_FUNGUS)
+                .add(Blocks.KELP)
+                .add(Blocks.KELP_PLANT)
+                .add(Blocks.SCULK_SHRIEKER)
+                .add(Blocks.BIG_DRIPLEAF_STEM)
+                .add(Blocks.BIG_DRIPLEAF)
+                .add(Blocks.SMALL_DRIPLEAF)
+                .add(Blocks.GRINDSTONE)
+                .add(Blocks.CONDUIT)
+                .add(Blocks.REPEATER)
+                .add(Blocks.COMPARATOR)
+
+
+
         } catch (e: Exception) {
             LOGGER.error("Error {}", e.toString())
         }

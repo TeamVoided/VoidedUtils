@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.teamvoided.voidlib.core.MCUtilsKt;
-import org.teamvoided.voidlib.core.VoidLibKt;
 
 import static org.teamvoided.voided_utils.VoidedUtils.INSTANCE;
 
