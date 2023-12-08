@@ -24,7 +24,7 @@ repositories {
 }
 
 modSettings {
-    modId(base.archivesName.get())
+    modId("voided_utils")
     modName("Voided Utils")
 
     entrypoint("main", "org.teamvoided.voided_utils.VoidedUtils::commonInit")
@@ -42,7 +42,9 @@ dependencies {
     annotationProcessor("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")
     modImplementation(files("scuffedlib-1.0.0+1.20.1.jar"))
 
-    modImplementation("org.teamvoided:voidlib-core:1.5.8+1.20.1")
+    modImplementation("org.teamvoided:voidlib-core:1.5.8+1.20.1-SNAPSHOT")
+    modImplementation("org.teamvoided:voidlib-vui:1.5.8+1.20.1-SNAPSHOT")
+    modImplementation("org.teamvoided:voidlib-config:1.5.8+1.20.1-SNAPSHOT")
 }
 
 
@@ -54,7 +56,7 @@ loom {
             ideConfigGenerated(true)
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=${"voided_utils"}")
+            vmArg("-Dfabric-api.datagen.modid=${modSettings.modId()}")
             runDir("build/datagen")
         }
     }

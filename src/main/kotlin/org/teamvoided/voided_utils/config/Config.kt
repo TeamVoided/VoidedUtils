@@ -1,51 +1,59 @@
 package org.teamvoided.voided_utils.config
 
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.encodeToString
-import net.fabricmc.loader.api.FabricLoader
-import org.teamvoided.voided_utils.VoidedUtils.LOGGER
-import org.teamvoided.voided_utils.VoidedUtils.MODID
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
+import org.teamvoided.voided_utils.VoidedUtils.id
+import org.teamvoided.voidlib.config.KotlinXVoidFig
+import org.teamvoided.voidlib.config.Side
+import org.teamvoided.voidlib.config.VoidFig
 
 
 
-object Config {
-    private val defaultConfig = ConfigData(
+object Config: KotlinXVoidFig<ConfigData>(
+    id("config"),
+    Side.COMMON,
+    ConfigData(
         1,
-        enableRedstoneLantern = true,
-        enableCharredWoodSet = true,
-        enableIronCoatedBlocks = true,
-        enableCakeDrops = true,
-        enableBarterUpgrades = true,
-        enableToggleButtons = true,
-        enableShearsMineableTag = true,
-        enableGlowBerriesGlow = true,
-        enableConsistentStones = true,
-        enableMossTag = true,
-        enableX = true
-    )
-    private val configFile: File = FabricLoader.getInstance().configDir.resolve("$MODID.json").toFile()
-
-    var config: ConfigData = defaultConfig
-
-    @OptIn(ExperimentalSerializationApi::class)
-    private val json = Json { prettyPrint = true; prettyPrintIndent = "\t" }
-
-    fun load() {
-        try {
-            val stringData = FileReader(configFile).use { it.readText() }
-            config = json.decodeFromString(stringData)
-        } catch (e: Exception) {
-            LOGGER.info("No config Found! Or is Broken! Making a new one.")
-            LOGGER.warn(e.toString())
-            save(defaultConfig)
-        }
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    ),
+    Json { prettyPrint = true },
+    ConfigData.serializer(),
+    "json"
+) {
+    override fun matches(other: VoidFig<ConfigData>): Boolean {
+         return matchesOther(other.config)
     }
-    private fun save(config: ConfigData) = FileWriter(configFile).use { it.write(json.encodeToString(config)) }
+
+    override fun matchesRawData(other: String): Boolean {
+        val otherConfig: ConfigData = deserialize(other)
+
+        return matchesOther(otherConfig)
+    }
+
+    private fun matchesOther(otherConfig: ConfigData): Boolean {
+        return config.version == otherConfig.version &&
+                config.enableRedstoneLantern == otherConfig.enableRedstoneLantern &&
+                config.enableCharredWoodSet == otherConfig.enableCharredWoodSet &&
+                config.enableIronCoatedBlocks == otherConfig.enableIronCoatedBlocks &&
+                config.enableCakeDrops == otherConfig.enableCakeDrops &&
+                config.enableBarterUpgrades == otherConfig.enableBarterUpgrades &&
+                config.enableToggleButtons == otherConfig.enableToggleButtons &&
+                config.enableShearsMineableTag == otherConfig.enableShearsMineableTag &&
+                config.enableGlowBerriesGlow == otherConfig.enableGlowBerriesGlow &&
+                config.enableConsistentStones == otherConfig.enableConsistentStones &&
+                config.enableMossTag == otherConfig.enableMossTag &&
+                config.enableX == otherConfig.enableX
+    }
 }
 
 

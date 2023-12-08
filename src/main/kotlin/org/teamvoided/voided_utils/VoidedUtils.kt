@@ -1,7 +1,6 @@
 package org.teamvoided.voided_utils
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.minecraft.block.AbstractBlock.ContextPredicate
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.resource.Material
@@ -11,11 +10,11 @@ import org.slf4j.LoggerFactory
 import org.teamvoided.scuffedlib.sign.MaterialRegistry
 import org.teamvoided.voided_utils.config.Config
 import org.teamvoided.voided_utils.config.ConfigData
-import org.teamvoided.voided_utils.data.tags.VUBlockTags
 import org.teamvoided.voided_utils.misc.Injections
 import org.teamvoided.voided_utils.misc.Keybinds
 import org.teamvoided.voided_utils.registries.*
 import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
+import org.teamvoided.voidlib.config.ConfigManager
 
 @Suppress("unused")
 object VoidedUtils {
@@ -24,7 +23,7 @@ object VoidedUtils {
     fun id(path: String): Identifier = Identifier(MODID, path)
     fun id(namespace: String, path: String): Identifier = Identifier(namespace, path)
     fun commonInit() {
-        Config.load()
+        ConfigManager.registerConfig(Config)
         LOGGER.info("Utilizing your eRam and qRam")
         VUItems.init()
         VUBlocks.init()
