@@ -11,14 +11,17 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.sound.SoundEvents
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import org.teamvoided.voided_utils.VoidedUtils
 import org.teamvoided.voided_utils.VoidedUtils.id
 import org.teamvoided.voided_utils.blocks.AbstractToggleableButtonBlock
 import org.teamvoided.voided_utils.blocks.RedstoneLanternBlock
+import org.teamvoided.voided_utils.mixin.AbstractButtonBlockAccessor
 import org.teamvoided.voided_utils.registries.VUItems.ALL_ITEM_LIST
 import org.teamvoided.voided_utils.registries.modules.CharredWoodSet
 import org.teamvoided.voided_utils.registries.modules.ConsistentStones
+import org.teamvoided.voidlib.core.gId
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,67 +49,49 @@ object VUBlocks {
     )
 
 
-    val REDSTONE_LANTERN: Block = RedstoneLanternBlock(
-        FabricBlockSettings.copyOf(Blocks.LANTERN).luminance { if (it.get(RedstoneLanternBlock.LIT)) 8 else 0 })
+    val REDSTONE_LANTERN: Block? by lazy {
+        if (VoidedUtils.getConfig().enableRedstoneLantern)
+            RedstoneLanternBlock(FabricBlockSettings.copyOf(Blocks.LANTERN).luminance { if (it.get(RedstoneLanternBlock.LIT)) 8 else 0 })
+        else null
+    }
 
-    val IRON_COATED_TRAPDOOR: Block =
-        TrapdoorBlock(FabricBlockSettings.copyOf(Blocks.IRON_TRAPDOOR), IRON_LIKE_BLOCK_SET_TYPE)
-    val IRON_COATED_DOOR: Block = DoorBlock(FabricBlockSettings.copyOf(Blocks.IRON_DOOR), IRON_LIKE_BLOCK_SET_TYPE)
+    val IRON_COATED_TRAPDOOR: Block? by lazy {
+        if (VoidedUtils.getConfig().enableIronCoatedBlocks)
+            TrapdoorBlock(FabricBlockSettings.copyOf(Blocks.IRON_TRAPDOOR), IRON_LIKE_BLOCK_SET_TYPE)
+        else null
+    }
+    val IRON_COATED_DOOR: Block? by lazy {
+        if (VoidedUtils.getConfig().enableIronCoatedBlocks)
+            DoorBlock(FabricBlockSettings.copyOf(Blocks.IRON_DOOR), IRON_LIKE_BLOCK_SET_TYPE)
+        else null
+    }
 
-    val TOGGLEABLE_STONE_BUTTON: AbstractToggleableButtonBlock = createToggleStoneBtn(Blocks.STONE_BUTTON)
-    val TOGGLEABLE_POLISHED_BLACKSTONE_BUTTON: AbstractToggleableButtonBlock =
-        createToggleStoneBtn(Blocks.POLISHED_BLACKSTONE_BUTTON)
-    val TOGGLEABLE_OAK_BUTTON: AbstractToggleableButtonBlock = createToggleBtn(Blocks.OAK_BUTTON, BlockSetType.OAK)
-    val TOGGLEABLE_SPRUCE_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.SPRUCE_BUTTON, BlockSetType.SPRUCE)
-    val TOGGLEABLE_BIRCH_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.BIRCH_BUTTON, BlockSetType.BIRCH)
-    val TOGGLEABLE_JUNGLE_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.JUNGLE_BUTTON, BlockSetType.JUNGLE)
-    val TOGGLEABLE_ACACIA_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.ACACIA_BUTTON, BlockSetType.ACACIA)
-    val TOGGLEABLE_DARK_OAK_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.DARK_OAK_BUTTON, BlockSetType.DARK_OAK)
-    val TOGGLEABLE_MANGROVE_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.MANGROVE_BUTTON, BlockSetType.MANGROVE)
-    val TOGGLEABLE_CHERRY_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.CHERRY_BUTTON, BlockSetType.CHERRY)
-    val TOGGLEABLE_BAMBOO_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.BAMBOO_BUTTON, BlockSetType.BAMBOO)
-    val TOGGLEABLE_CRIMSON_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.CRIMSON_BUTTON, BlockSetType.CRIMSON)
-    val TOGGLEABLE_WARPED_BUTTON: AbstractToggleableButtonBlock =
-        createToggleBtn(Blocks.WARPED_BUTTON, BlockSetType.WARPED)
+    val toggleButtons = mutableMapOf<Identifier, AbstractToggleableButtonBlock>()
 
 
     fun init() {
         val c = VoidedUtils.getConfig()
 
-        if (c.enableRedstoneLantern) registerWithItem("redstone_lantern", REDSTONE_LANTERN)
+        if (c.enableRedstoneLantern) registerWithItem("redstone_lantern", REDSTONE_LANTERN!!)
         if (c.enableCharredWoodSet) CharredWoodSet.init()
         if (c.enableIronCoatedBlocks) {
-            registerWithItem("iron_coated_trapdoor", IRON_COATED_TRAPDOOR)
-            registerWithItem("iron_coated_door", IRON_COATED_DOOR)
+            registerWithItem("iron_coated_trapdoor", IRON_COATED_TRAPDOOR!!)
+            registerWithItem("iron_coated_door", IRON_COATED_DOOR!!)
         }
         if (c.enableToggleButtons) {
-            registerToggleBtn("toggleable_stone_button", TOGGLEABLE_STONE_BUTTON)
-            registerToggleBtn("toggleable_polished_blackstone_button", TOGGLEABLE_POLISHED_BLACKSTONE_BUTTON)
-            registerToggleBtn("toggleable_oak_button", TOGGLEABLE_OAK_BUTTON)
-            registerToggleBtn("toggleable_spruce_button", TOGGLEABLE_SPRUCE_BUTTON)
-            registerToggleBtn("toggleable_birch_button", TOGGLEABLE_BIRCH_BUTTON)
-            registerToggleBtn("toggleable_jungle_button", TOGGLEABLE_JUNGLE_BUTTON)
-            registerToggleBtn("toggleable_acacia_button", TOGGLEABLE_ACACIA_BUTTON)
-            registerToggleBtn("toggleable_dark_oak_button", TOGGLEABLE_DARK_OAK_BUTTON)
-            registerToggleBtn("toggleable_mangrove_button", TOGGLEABLE_MANGROVE_BUTTON)
-            registerToggleBtn("toggleable_cherry_button", TOGGLEABLE_CHERRY_BUTTON)
-            registerToggleBtn("toggleable_bamboo_button", TOGGLEABLE_BAMBOO_BUTTON)
-            registerToggleBtn("toggleable_crimson_button", TOGGLEABLE_CRIMSON_BUTTON)
-            registerToggleBtn("toggleable_warped_button", TOGGLEABLE_WARPED_BUTTON)
+            Registries.BLOCK.forEach {
+                if (it is AbstractButtonBlock) {
+                    val newId = "toggleable_${it.gId.namespace}_${it.gId.path}"
+                    val toggleButton = createToggleBtn(it, (it as AbstractButtonBlockAccessor).blockSetType)
+                    toggleButtons += id(newId) to toggleButton
+                    registerToggleBtn(newId, toggleButton)
+                }
+            }
         }
         if (c.enableConsistentStones) ConsistentStones.init()
     }
 
-    val CUTOUT_LIST: ArrayList<Block> = arrayListOf(
+    val CUTOUT_LIST: ArrayList<Block?> = arrayListOf(
         REDSTONE_LANTERN,
         IRON_COATED_TRAPDOOR,
         IRON_COATED_DOOR
