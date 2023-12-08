@@ -4,7 +4,7 @@ plugins {
     id("fabric-loom") version "1.3.8"
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.serialization") version "1.9.10"
-    id("org.teamvoided.iridium") version "3.0.2"
+    id("org.teamvoided.iridium") version "3.1.9"
 }
 
 group = project.properties["maven_group"]!!
@@ -31,24 +31,23 @@ modSettings {
     entrypoint("client", "org.teamvoided.voided_utils.VoidedUtils::clientInit")
     entrypoint("fabric-datagen", "org.teamvoided.voided_utils.VoidedUtilsData")
     mixinFile("voided_utils.mixins.json")
+    accessWidener("voided_utils.accesswidener")
 
 }
 
 dependencies {
     modImplementation("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")?.let {
-        include(
-            it
-        )
+        include(it)
     }
     annotationProcessor("com.llamalad7.mixinextras:mixinextras-fabric:${project.properties["mixin_extras_version"]}")
     modImplementation(files("scuffedlib-1.0.0+1.20.1.jar"))
 
     modImplementation("org.teamvoided:voidlib-core:1.5.8+1.20.1")
-
 }
 
 
 loom {
+    accessWidenerPath.set(file("src/main/resources/voided_utils.accesswidener"))
     runs {
         create("data") {
             client()

@@ -1,6 +1,7 @@
 package org.teamvoided.voided_utils
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.minecraft.block.AbstractBlock.ContextPredicate
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.TexturedRenderLayers
 import net.minecraft.client.resource.Material
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory
 import org.teamvoided.scuffedlib.sign.MaterialRegistry
 import org.teamvoided.voided_utils.config.Config
 import org.teamvoided.voided_utils.config.ConfigData
+import org.teamvoided.voided_utils.data.tags.VUBlockTags
 import org.teamvoided.voided_utils.misc.Injections
 import org.teamvoided.voided_utils.misc.Keybinds
 import org.teamvoided.voided_utils.registries.*
@@ -38,7 +40,12 @@ object VoidedUtils {
         val c = getConfig()
         if (c.enableCharredWoodSet) {
             MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, CharredWoodSet.CHARRED_SIGN_ID))
-            MaterialRegistry.addId(Material(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, CharredWoodSet.CHARRED_HANGING_SIGN_ID))
+            MaterialRegistry.addId(
+                Material(
+                    TexturedRenderLayers.SIGNS_ATLAS_TEXTURE,
+                    CharredWoodSet.CHARRED_HANGING_SIGN_ID
+                )
+            )
         }
     }
 

@@ -7,6 +7,7 @@
     "AbstractFireBlockMixin",
     "LivingEntityMixin",
     "MossBlockMixin",
+    "NetherPortalBlockMixin",
     "ShearsItemMixin"
   ],
   "client": [

@@ -147,8 +147,6 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
                 .add(Blocks.COBWEB)
                 .forceAddTag(BlockTags.LEAVES)
 
-
-
             getOrCreateTagBuilder(VUBlockTags.AIR_PASSABLE)
                 .forceAddTag(BlockTags.REPLACEABLE)
                 .forceAddTag(BlockTags.ALL_SIGNS)
@@ -213,6 +211,12 @@ class BlockTagProvider(output: FabricDataOutput, registriesFuture: CompletableFu
                 .add(Blocks.CONDUIT)
                 .add(Blocks.REPEATER)
                 .add(Blocks.COMPARATOR)
+
+            getOrCreateTagBuilder(VUBlockTags.NETHER_PORTAL_BLOCK)
+                .add(Blocks.OBSIDIAN)
+                .add(ConsistentStones.OBSIDIAN_SLAB)
+                .add(ConsistentStones.OBSIDIAN_STAIR)
+                .add(ConsistentStones.OBSIDIAN_WALL)
 
 
 
